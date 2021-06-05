@@ -12,6 +12,8 @@
   <input type="text" name="" placeholder="Username">
   <input type="password" name="" placeholder="Password">
   <input type="submit" name="" value="Login">
+  <br/><br/>
+  <a href="cadastroConta.php">Clique aqui</a>
 </form>
 
 
