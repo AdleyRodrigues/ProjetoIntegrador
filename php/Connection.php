@@ -9,7 +9,7 @@ class Connection {
 
      const TYPE = 'mysql';
      const HOST = 'localhost';
-     const NAME = 'financias';
+     const NAME = 'financas';
      const USER = 'root';
      const PASS = '';
      const PORT = '3306';

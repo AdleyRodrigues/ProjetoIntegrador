@@ -3,17 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>Tela Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
 
 <form class="box" action="index.html" method="post">
   <h1>Login</h1>
-  <input type="text" name="" placeholder="Username">
+  <input type="text" name="" placeholder="Username" autofocus>
   <input type="password" name="" placeholder="Password">
   <input type="submit" name="" value="Login">
   <br/><br/>
-  <a href="cadastroConta.php">Clique aqui</a>
+  <a href="cadastroConta.php">Tela cadastro conta</a><br/>
+  <a href="cadastroDespesa.php">Tela cadastro despesa</a>
 </form>
 
 
