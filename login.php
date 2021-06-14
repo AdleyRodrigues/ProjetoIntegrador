@@ -13,7 +13,8 @@
   <input type="password" name="" placeholder="Password">
   <input type="submit" name="" value="Login">
   <br/><br/>
-  <a href="cadastroConta.html">Não tem login? cadastre-se aqui</a><br/>
+  <a href="cadastroConta.php">Tela cadastro conta</a><br/>
+  <a href="cadastroDespesa.php">Tela cadastro despesa</a>
 </form>
 
 
