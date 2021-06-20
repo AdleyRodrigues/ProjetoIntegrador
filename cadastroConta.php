@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Cadastro Conta</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="css/cadastroConta.css">
   </head>
   <body>
 
@@ -13,9 +13,8 @@
   Email: <input type="text" name="email" ><br/><br/>
   Senha: <input type="password" name="senha" ><br/><br/>
   Confirmar senha: <input type="password" name="" ><br/><br/>
+
   <input type="submit" name="" value="cadastrar">
 </form>
-
-
   </body>
 </html>

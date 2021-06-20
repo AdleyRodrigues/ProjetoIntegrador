@@ -1,0 +1,11 @@
+body,html{
+    background-image: url("img/gerenciamento.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:blanchedalmond;
+}
+.container{
+    text-align: center;
+}
