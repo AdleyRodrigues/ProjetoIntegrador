@@ -1,3 +1,4 @@
+//Esse script é apenas para ocultar e mostrar a caixa de seleção das parcelas
 
 document.getElementById('opcao').style.visibility = 'hidden';
 

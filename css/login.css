@@ -1,63 +1,93 @@
-body{
+* {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background-color: #fff;
+  box-sizing: border-box;
 }
-.box{
-  width: 300px;
-  padding: 40px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  background: #59069cc7;
-  text-align: center;
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
-.box h1{
-  color: white;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.box input[type = "text"],.box input[type = "password"]{
-  border:0;
-  background: none;
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px solid #dee0df;
-  padding: 14px 10px;
-  width: 200px;
-  outline: none;
-  color: white;
-  border-radius: 24px;
-  transition: 0.25s;
-}
-.box input[type = "text"]:focus,.box input[type = "password"]:focus{
-  width: 280px;
-  border-color: #dee0df;
-}
-.box input[type = "button"]{
 
-  border:0;
-  background: none;
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px solid #dee0df;
-  padding: 14px 40px;
-  outline: none;
-  color: white;
-  border-radius: 24px;
-  transition: 0.25s;
+.container{
+  
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #f1f1f2;
+}
+
+.content{
+background-color: #fff;
+border-radius: 15px;
+width: 60%;
+height: 70%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.form{
+display: flex;
+flex-direction: column;
+}
+
+input:focus{
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
+
+.form input{
+height: 40px;
+width: 100%;
+border: none;
+background-color: #e6e6e6;
+border-radius: 25px;
+}
+
+.label-input{
+background-color: #e6e6e6;
+border-radius: 25px;
+display: flex;
+align-items: center;
+margin: 5px;
+padding: 0 8px;
+}
+
+.btnEntrar{
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  background-color: #ba68c8;
+  height: 40px;
+  padding: 0 8px;
+}
+
+.btnEntrar:hover{
   cursor: pointer;
+  transition-duration: 0.5s;
+  background-color: #83498c;
 }
-.box input[type = "submit"]:hover{
-  background: #dee0df;
+
+.icoon{
+color: #666666;
+padding: 0 8px;
+
 }
-.pag{
- color: #101311;
+
+.imagem{
+display: flex;
+margin-left: 40px;
 }
-.home{
-  color: #101311;
+img{
+height: 60vh;
+width: 30vw;
 }
+
+.cadastroConta, .home{
+text-decoration: none;
+color: #666666;
+}
+

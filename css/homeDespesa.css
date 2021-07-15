@@ -23,12 +23,15 @@ html, body {
     text-align: center;
 }
 
+.button.new {
+    text-decoration:none;
+}
+
 .form{
     margin-top:10px;
     margin-bottom: 10px;
    
 }
-
 
 .modal-overlay {
     width: 100%;

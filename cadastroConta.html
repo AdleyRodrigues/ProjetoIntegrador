@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/2a9a8d26e9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/cadastroConta.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400&display=swap"
+        rel="stylesheet">
+
+    <title>Cadastro Conta</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="cadastro">
+                <form class="form" action="" method="Post">
+                    <h1> Crie sua Conta </h1><br>
+
+                    <label class="label-input" for="">
+                        <i class="far fa-user icoon"></i>
+                        <input type="text" name="nome" placeholder="Nome Completo" autofocus>
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icoon"></i>
+                        <input type="text" id="email" name="email" placeholder="Email">
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fas fa-lock icoon"></i>
+                        <input type="password" id="senha" name="senha" placeholder="Senha">
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fas fa-lock icoon"></i>
+                        <input type="password" name="senha2" id="senha2" placeholder="Confirmar Senha">
+                    </label>
+
+                    <button type="button" class="btnCadastrar" id="login"> Criar Conta </button>
+                    
+
+                    <a class="home" href="index.html">Página Principal</a>
+                </form>
+            </div>
+            
+            <div class="imagem">
+                <img src="css/img/cadastroUser.png" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/cadastroConta.js"></script>
+</body>
+
+</html>
