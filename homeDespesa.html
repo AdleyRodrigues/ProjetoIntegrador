@@ -14,9 +14,9 @@
 
 <body>
     <div class="container">
-        <h1>Despesas cadastradas</h1> <br>
-        <hr>
-        <a href="#" onclick="PopUps.open()" class="button new">+ Nova Despesa</a> <br>
+        <div class="content">
+        <h1>Despesas cadastradas</h1><hr><br>
+        <a href="#" onclick="PopUps.open()" class="button new">+ Nova Despesa</a> <br><br>
         
         <table class="table table-bordered table-hover">
             
@@ -43,7 +43,7 @@
 
             </tbody>
         </table>
-        <a href="home.html" class="button new">  Sair </a> <br>
+        <button type="button" href="home.html" class="btnCadastrar" id="login"> Sair </button>
     </div>
 
 
@@ -92,15 +92,16 @@
                         </label>
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary" onclick="inserir(); PopUps.close()" type="button" id="cadastrar">Cadastrar</button>
-                        <button class="btn btn-secondary" type="reset">Limpar</button>
-                        <a onclick="PopUps.close()" href="#" class="btn btn-tertiary">Cancelar</a>
+                    <div >
+                        <button class="btnCadastrar" onclick="inserir(); PopUps.close()" type="button" id="cadastrar">Cadastrar</button>
+                        <button class="btnCadastrar" type="reset">Limpar</button>
+                        <button onclick="PopUps.close()" href="#" class="btnCadastrar">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 
     <script src="js/homeDespesa.js"></script>
 </body>

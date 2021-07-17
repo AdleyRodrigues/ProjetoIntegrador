@@ -32,7 +32,16 @@ align-items: center;
 display: flex;
 flex-direction: column;
 }
-
+.home:hover{
+  cursor: pointer;
+  transition-duration: 0.5s;
+  color: #6056c9;
+}
+.cadastroConta:hover{
+  cursor: pointer;
+  transition-duration: 0.5s;
+  color: #6056c9;
+}
 input:focus{
   box-shadow: 0 0 0 0;
   border: 0 none;
