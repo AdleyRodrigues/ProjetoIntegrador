@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="css/cadastroConta.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400&display=swap" rel="stylesheet">
 
     <title>Cadastro Conta</title>
 </head>
@@ -19,32 +18,32 @@
     <div class="container">
         <div class="content">
             <div class="cadastro">
+                <div class="alert alert-primary" id="alert" role="alert"></div>
                 <form class="form" action="" method="Post">
                     <h1> Crie sua Conta </h1><br>
 
-                    <label class="label-input" for="">
+                    <label class="label-input" for="name">
                         <i class="far fa-user icoon"></i>
-                        <input type="text" name="nome" placeholder="Nome Completo" autofocus>
+                        <input type="text" id="name" name="name" placeholder="Nome Completo" autofocus>
                     </label>
 
-                    <label class="label-input" for="">
+                    <label class="label-input" for="avatar">
+                        <i class="fas fa-image icoon"></i>
+                        <input type="file" name="avatar" id="avatar" placeholder="Imagem">
+                    </label>
+
+                    <label class="label-input" for="email">
                         <i class="far fa-envelope icoon"></i>
                         <input type="text" id="email" name="email" placeholder="Email">
                     </label>
 
-                    <label class="label-input" for="">
+                    <label class="label-input" for="password">
                         <i class="fas fa-lock icoon"></i>
-                        <input type="password" id="senha" name="senha" placeholder="Senha">
-                    </label>
-
-                    <label class="label-input" for="">
-                        <i class="fas fa-lock icoon"></i>
-                        <input type="password" name="senha2" id="senha2" placeholder="Confirmar Senha">
+                        <input type="password" id="password" name="password" placeholder="Senha">
                     </label>
 
                     <button type="button" class="btnCadastrar" id="login"> Criar Conta </button>
                     
-
                     <a class="home" href="index.html">Página Principal</a>
                 </form>
             </div>
@@ -55,8 +54,8 @@
         </div>
     </div>
 
-
-    <script src="js/cadastroConta.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/cadastro_conta.js"></script>
 </body>
 
 </html>
