@@ -1,9 +1,9 @@
 const db = require('../database');
 
 module.exports = {
-    getAll: () => {
+    getAll: (account_id) => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT * FROM accounts', (error, results) => {
+            db.query('SELECT * FROM expenses WHERE account_id = ?', [account_id], (error, results) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
@@ -13,9 +13,9 @@ module.exports = {
         });
     },
 
-    getAccountById: (id) => {
+    getExpenseById: (id) => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT * FROM accounts WHERE id = ?', [id], (error, result) => {
+            db.query('SELECT * FROM expenses WHERE id = ?', [id], (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
@@ -25,22 +25,10 @@ module.exports = {
         });
     },
 
-    getAccountByEmail: (email) => {
+    create: (expense) => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT * FROM accounts WHERE email = ?', [email], (error, result) => {
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-
-                accepted(result);
-            });
-        });
-    },
-
-    create: (account) => {
-        return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO accounts (id, name, avatar, email, password) VALUES (?, ?, ?, ?, ?)', 
-                [account.id, account.name, account.avatar, account.email, account.password], (error, result) => {
+            db.query('INSERT INTO expenses (id, date, description, parcel, status, category_id, card_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+                [expense.id, expense.date, expense.description, expense.parcel, expense.status, expense.category_id, expense.card_id, expense.account_id], (error, result) => {
             
                 if (error) {
                     rejected(error.sqlMessage);
@@ -51,10 +39,10 @@ module.exports = {
         });
     },
 
-    changeAccountById: (account) => {
+    changeAccountById: (expense) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE accounts SET name = ?, avatar = ?, email = ?, password = ? WHERE id = ?', 
-                [account.name, account.avatar, account.email, account.password, account.id], (error, result) => {
+            db.query('UPDATE expenses SET name = ?, avatar = ?, email = ?, password = ? WHERE id = ?', 
+                [expense.name, expense.avatar, expense.email, expense.password, expense.id], (error, result) => {
             
                 if (error) {
                     rejected(error.sqlMessage);
@@ -67,7 +55,7 @@ module.exports = {
 
     removeAccountById: (id) => {
         return new Promise((accepted, rejected) => {
-            db.query('DELETE FROM accounts WHERE id = ?', [id], (error, result) => {
+            db.query('DELETE FROM expenses WHERE id = ?', [id], (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
@@ -79,7 +67,7 @@ module.exports = {
 
     getMaxId: () => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT MAX(id) as id FROM accounts', (error, result) => {
+            db.query('SELECT MAX(id) as id FROM expenses', (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }

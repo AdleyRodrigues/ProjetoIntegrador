@@ -44,12 +44,12 @@ CREATE TABLE expenses (
     description VARCHAR(100),
     parcel SMALLINT NOT NULL,
     status TINYINT NOT NULL,
-    category_id INTEGER,
-    cards_id INTEGER,
-    accounts_id INTEGER,
+    category_id INTEGER NOT NULL,
+    card_id INTEGER,
+    account_id INTEGER NOT NULL,
     FOREIGN KEY (category_id) REFERENCES category(id),
-    FOREIGN KEY (cards_id) REFERENCES cards(id),
-    FOREIGN KEY (accounts_id) REFERENCES accounts(id) ON DELETE CASCADE
+    FOREIGN KEY (card_id) REFERENCES cards(id),
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS parcels;
