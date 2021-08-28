@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const sqlite3 = require('sqlite3').verbose();
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -8,7 +9,10 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((error) => {
-    if (error) throw error;
+    if (error) {
+        console.log(`Erro na conexão com banco de dados. [${error.errno}: ${error.message}]`)
+    }
+
     console.log(`Database ${process.env.DB_NAME} connected`);
 });
 

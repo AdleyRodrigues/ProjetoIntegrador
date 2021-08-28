@@ -1,27 +1,13 @@
 require('dotenv').config({ path: '.env' });
+
 const express = require('express');
 const cors = require('cors');
 const routes = require('./routes');
 const server = express();
-const session = require('express-session');
 
-server.use(session({
-    secret: 'my key cookie',
-    saveUninitialized: true,
-    resave: true,
-    cookie: {
-        secure: false,
-        maxAge: 1000 * 60 * 60 // 1 hora
-    },
-}));
-
+server.use(express.static('uploads'));
 server.use(cors({
-    origin: [
-        'http://localhost:5500',
-        'https://localhost:5500',
-        'http://127.0.0.1:5500',
-        'https://127.0.0.1:5500'
-    ],
+    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:5555', 'http://127.0.0.1:5555'],
     credentials: true
 }));
 server.use(express.json());

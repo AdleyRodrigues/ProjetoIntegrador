@@ -53,7 +53,7 @@ module.exports = {
         });
     },
 
-    removeAccountById: (id) => {
+    removeExpenseById: (id) => {
         return new Promise((accepted, rejected) => {
             db.query('DELETE FROM expenses WHERE id = ?', [id], (error, result) => {
                 if (error) {
