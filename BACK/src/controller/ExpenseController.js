@@ -3,10 +3,10 @@ const expenseRepository = require('../repository/ExpenseRepository');
 
 module.exports = {
     getAll: async(req, res) => {
-        await expenseRepository.getAll(req.session.account.id).then(results => res.json(results)).catch(error => res.json(error));
+        await expenseRepository.getAll(req.params.account_id).then(results => res.json(results)).catch(error => res.json(error));
     },
 
-    getAccountById: async(req, res) => {
+    getExpenseById: async(req, res) => {
         await expenseRepository.getAccountById(req.params.id).then(result => res.json(result)).catch(error => res.json(error));
     },
 
@@ -39,30 +39,7 @@ module.exports = {
         res.json(expense);
     },
 
-    removeAccountById: async(req, res) => {
-        await expenseRepository.removeAccountById(req.params.id).then(res.json('Conta removida com sucesso.')).catch(error => res.json(error));
+    removeExpenseById: async(req, res) => {
+        await expenseRepository.removeExpenseById(req.params.id).then(res.json('Despesa removida com sucesso.')).catch(error => res.json(error));
     },
-
-    login: async(req, res) => {
-        let expense = new Account();
-        expense.validateLoginFields(req.body.email, req.body.password);
-
-        if (!expense.error) {
-            await expenseRepository.getAccountByEmail(req.body.email).then(result => {
-                if (result.length > 0) {
-                     if(result[0].password == req.body.password) {
-                        expense = result[0];
-                        delete expense.password;
-                        req.session.expense = expense;
-                     } else {
-                         expense.error = 'Email ou senha inválidos';
-                     }
-                } else {
-                    expense.error = 'Email ou senha inválidos';
-                }
-            }).catch(error => expense.error = error);
-        }
-
-        res.json(expense);
-    }
 }

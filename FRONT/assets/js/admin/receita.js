@@ -1,13 +1,36 @@
-const { getAll } = require("../../../../api/src/repository/ExpenseRepository");
-
 const usuario = JSON.parse(localStorage.getItem('usuario'));
 
 window.onload = () => {
     getAll();
 }
 
+document.getElementById("cadastrar_receita").addEventListener("click", function (event) {
+    event.preventDefault();
+    
+    axios.post("http://localhost:3000/api/incomings/create", {
+        date: document.getElementById("receita_date").value,
+        amount: document.getElementById("receita_value").value,
+        account_id: usuario ? usuario.id : null
+    }, {
+        auth: {
+            name: usuario ? usuario.email : null,
+            pass: usuario ? usuario.password : null
+        }
+    })
+    .then(function (response) {
+        if (response.data.error) {
+            alert(response.data.error);
+        } else {
+            getAll();
+        }
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+});
+
 function getAll() {
-    axios.get(`http://localhost:3000/api/expenses/${usuario.id}`, {
+    axios.get(`http://localhost:3000/api/incomings/${usuario.id}`, {
         auth: {
             name: usuario ? usuario.email : null,
             pass: usuario ? usuario.password : null
@@ -50,36 +73,20 @@ function getById(id) {
 }
 
 function tableBodyElements(elements) {
-    let tableRef = document.getElementById("lista_despesas");
+    let tableRef = document.getElementById("lista_receitas");
+    
     tableRef.innerHTML = "";
     //tableRef.removeChild();
     //tableRef.remove();
 
     elements.forEach(element => {
         let id = element.id;
-        let amount = element.amount;
         let date = moment(element.date).format('DD/MM/YYYY');
-        let description = element.description;
-        let parcel = element.parcel;
-        let status = element.status;
-        let category_id = element.category_id;
-        let card_id = element.card_id;
+        let amount = element.income;
         
         tableRef.innerHTML += 
         `<tr>
-            <td>${id}</td>
-            <td>${amount}</td>
-            <td>${date}</td>
-            <td>${description}</td>
-            <td>${parcel}</td>
-            <td>${status}</td>
-            <td>${category_id}</td>
-            <td>${card_id}</td>
-            <td>
-                <button onclick="details(${id})" data-toggle="tooltip" title="Detalhes" data-placement="top">
-                    <i class="bi bi-eye-fill" style="color: black;"></i>
-                </button>
-            </td>
+            <td>${id}</td><td>${date}</td><td>${amount}</td>
             <td>
                 <button onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top">
                     <i class="bi bi-pencil-square" style="color: blue;"></i>
@@ -94,8 +101,8 @@ function tableBodyElements(elements) {
     });
 }
 
-function remove(id) {   
-    axios.delete(`http://localhost:3000/api/expenses/${id}`, {}, {
+function remove(id) {    
+    axios.delete("http://localhost:3000/api/incomings/" + id, {}, {
         auth: {
             name: usuario ? usuario.email : null,
             pass: usuario ? usuario.password : null
@@ -115,7 +122,7 @@ function remove(id) {
 }
 
 function edit(id) {
-    expense = getById(id);
+    income = getById(id);
 
     if (income) {
         $('#modalNovaReceita').modal('show');

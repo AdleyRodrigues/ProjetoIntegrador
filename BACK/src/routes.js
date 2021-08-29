@@ -1,42 +1,49 @@
 const express = require("express");
-const multer = require('multer');
 const router = express.Router();
+const upload = require('./services/MulterConfig');
+const Account = require('./model/AccountModel');
 const accountController = require('./controller/AccountController');
 const expenseController = require('./controller/ExpenseController');
+const incomingController = require('./controller/IncomingController');
+const loginController = require('./controller/Logincontroller');
+const basicAuth = require('./services/BasicAuth');
 
-const permission = (req, res, next) => {
-    if (!req.session.account) {
-        return res.json({ error: 'Sem autorização' });
-    }
+// Login
+router.post('/login', (req, res) => {
+    const account = new Account();
+    account.email = req.body.email;
+    account.password = req.body.password;
+    
+    loginController.login(account).then(result => {
+        if (result.error) {
+            res.json(result);
+        }
 
-    next();
-};
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
+        res.json(result);
+    }).catch(error => {
+        res.json(error);
+    });
 });
 
-const upload = multer({ storage });
-
 // Contas
-router.get('/accounts', permission, accountController.getAll);
-router.get('/accounts/:email', permission, accountController.getAccountByEmail);
-router.get('/accounts/edit/:id', permission, accountController.getAccountById);
+router.get('/accounts/:id', basicAuth, accountController.getAccountById);
 router.post('/accounts/create', upload.single('avatar'), accountController.create);
-router.post('/login', accountController.login);
-router.put('/accounts/edit', permission, accountController.changeAccountById);
-router.delete('/accounts/:id', permission, accountController.removeAccountById);
+router.put('/accounts/edit', basicAuth, accountController.changeAccountById);
+router.delete('/accounts/:id', basicAuth, accountController.removeAccountById);
 
 // Despesas
-router.get('/expenses', permission, expenseController.getAll);
-router.get('/expenses/edit/:id', permission, expenseController.getAccountById);
-router.post('/expenses/create', permission, expenseController.create);
-router.put('/expenses/edit', permission, expenseController.changeAccountById);
-router.delete('/expenses/:id', permission, expenseController.removeAccountById);
+router.get('/expenses/:account_id', expenseController.getAll);
+router.get('/expenses/:id', expenseController.getExpenseById);
+//router.get('/expenses/edit/:id', expenseController.getExpenseById);
+router.post('/expenses/create', expenseController.create);
+router.put('/expenses/edit', expenseController.changeAccountById);
+router.post('/expenses/:id', expenseController.removeExpenseById);
+
+// Receitas
+router.get('/incomings/:account_id', incomingController.getAll);
+router.get('/incomings/:id', incomingController.getIncomingById);
+router.post('/incomings/create', incomingController.create);
+router.put('/incomings/edit', incomingController.changeIncomingById);
+router.delete('/incomings/:id', incomingController.removeIncomingById);
 
 module.exports = router;

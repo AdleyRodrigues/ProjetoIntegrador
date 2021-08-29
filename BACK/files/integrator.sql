@@ -2,7 +2,13 @@ CREATE DATABASE IF NOT EXISTS integrator CHARACTER SET = 'utf8mb4' COLLATE = 'ut
 
 USE integrator;
 
+DROP TABLE IF EXISTS incomings;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS parcels;
+DROP TABLE IF EXISTS expenses;
 DROP TABLE IF EXISTS accounts;
+
 CREATE TABLE accounts (
     id INTEGER PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -11,22 +17,20 @@ CREATE TABLE accounts (
 	password VARCHAR(100) NOT NULL
 );
 
-DROP TABLE IF EXISTS incomings;
+
 CREATE TABLE incomings (
     id INTEGER PRIMARY KEY,
     date DATE NOT NULL,
     income DECIMAL(10,2) NOT NULL,
-    accounts_id INTEGER,
-    FOREIGN KEY (accounts_id) REFERENCES accounts(id) ON DELETE CASCADE
+    account_id INTEGER NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS category;
-CREATE TABLE category (
+CREATE TABLE categories (
     id INTEGER PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
-DROP TABLE IF EXISTS cards;
 CREATE TABLE cards (
     id INTEGER PRIMARY KEY,
     number INTEGER NOT NULL UNIQUE,
@@ -37,9 +41,9 @@ CREATE TABLE cards (
     current_value DECIMAL(10,2)
 );
 
-DROP TABLE IF EXISTS expenses;
 CREATE TABLE expenses (
     id INTEGER PRIMARY KEY,
+    amount DECIMAL(10,2) NOT NULL,
     date DATE NOT NULL,
     description VARCHAR(100),
     parcel SMALLINT NOT NULL,
@@ -47,15 +51,15 @@ CREATE TABLE expenses (
     category_id INTEGER NOT NULL,
     card_id INTEGER,
     account_id INTEGER NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES category(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
     FOREIGN KEY (card_id) REFERENCES cards(id),
     FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS parcels;
 CREATE TABLE parcels (
     id INTEGER PRIMARY KEY,
     due_date DATE NOT NULL,
-    expenses_id INTEGER,
+    amount DECIMAL(10,2) NOT NULL,
+    expenses_id INTEGER NOT NULL,
     FOREIGN KEY (expenses_id) REFERENCES expenses(id) ON DELETE CASCADE
 );
