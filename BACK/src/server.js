@@ -5,7 +5,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const server = express();
 
-server.use(express.static('uploads'));
+server.use(express.static('public'));
 server.use(cors({
     origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:5555', 'http://127.0.0.1:5555'],
     credentials: true

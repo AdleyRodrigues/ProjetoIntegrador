@@ -55,7 +55,7 @@ document.getElementById("cadastrar_despesa").addEventListener("click", function 
             parcel: document.getElementById("despesa_parcela").value,
             status: document.getElementById("despesa_status").checked ? 1 : 0,
             category_id: $("#despesa_categoria option:selected").val(),
-            card_id: $("#despesa_cartao option:selected").val(),
+            card_id: $("#despesa_cartao option:selected").val() == "Selecione" ? "" : $("#despesa_cartao option:selected").val(),
             account_id: usuario ? usuario.id : null
         }, {
             auth: {

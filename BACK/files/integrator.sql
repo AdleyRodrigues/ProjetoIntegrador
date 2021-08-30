@@ -17,7 +17,7 @@ CREATE TABLE accounts (
 	password VARCHAR(100) NOT NULL
 );
 
-
+#receitas
 CREATE TABLE incomings (
     id INTEGER PRIMARY KEY,
     date DATE NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE cards (
     account_id INTEGER NOT NULL,
     FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
-
+#despesas
 CREATE TABLE expenses (
     id INTEGER PRIMARY KEY,
     amount DECIMAL(10,2) NOT NULL,

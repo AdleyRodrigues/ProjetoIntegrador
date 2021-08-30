@@ -3,11 +3,15 @@ const accountRepository = require('../repository/AccountRepository');
 
 module.exports = {
     getAccountById: async (req, res) => {
-        await accountRepository.getAccountById(req.params.id).then(result => res.json(result)).catch(error => res.json(error));
+        await accountRepository.getAccountById(req.params.id)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
     getAccountByEmail: async (req, res) => {
-        await accountRepository.getAccountByEmail(req.params.email).then(result => res.json(result)).catch(error => res.json(error));
+        await accountRepository.getAccountByEmail(req.params.email)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
     create: async (req, res) => {
@@ -37,6 +41,8 @@ module.exports = {
     },
 
     removeAccountById: async (req, res) => {
-        await accountRepository.removeAccountById(req.params.id).then(res.json('Conta removida com sucesso.')).catch(error => res.json(error));
+        await accountRepository.removeAccountById(req.params.id)
+            .then(res.json('Conta removida com sucesso.'))
+            .catch(error => res.json(error));
     }
 }
