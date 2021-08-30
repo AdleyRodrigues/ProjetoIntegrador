@@ -27,29 +27,29 @@ module.exports = {
 
     create: (account) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO accounts (id, name, avatar, email, password) VALUES (?, ?, ?, ?, ?)', 
+            db.query('INSERT INTO accounts (id, name, avatar, email, password) VALUES (?, ?, ?, ?, ?)',
                 [account.id, account.name, account.avatar, account.email, account.password], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-                
-                accepted(true);
-            });
+
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
     changeAccountById: (account) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE accounts SET name = ?, avatar = ?, email = ?, password = ? WHERE id = ?', 
+            db.query('UPDATE accounts SET name = ?, avatar = ?, email = ?, password = ? WHERE id = ?',
                 [account.name, account.avatar, account.email, account.password, account.id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
 
-                accepted(true);
-            });
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
@@ -59,7 +59,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(true);
             });
         });
@@ -71,7 +71,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
- 
+
                 result[0].id != null ? accepted(result[0].id) : accepted(0);
             });
         });

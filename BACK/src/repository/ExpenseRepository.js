@@ -27,29 +27,29 @@ module.exports = {
 
     create: (expense) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO expenses (id, amount, date, description, parcel, status, category_id, card_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            db.query('INSERT INTO expenses (id, amount, date, description, parcel, status, category_id, card_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [expense.id, expense.amount, expense.date, expense.description, expense.parcel, expense.status, expense.category_id, expense.card_id, expense.account_id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-                
-                accepted(true);
-            });
+
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
     changeExpenseById: (expense) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE expenses SET amount = ?, date = ?, description = ?, parcel = ?, status = ?, category_id = ?, card_id = ?, account_id = ? WHERE id = ?', 
+            db.query('UPDATE expenses SET amount = ?, date = ?, description = ?, parcel = ?, status = ?, category_id = ?, card_id = ?, account_id = ? WHERE id = ?',
                 [expense.amount, expense.date, expense.description, expense.parcel, expense.status, expense.category_id, expense.card_id, expense.account_id, expense.id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
 
-                accepted(true);
-            });
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
@@ -59,7 +59,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(true);
             });
         });
@@ -71,7 +71,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
- 
+
                 result[0].id != null ? accepted(result[0].id) : accepted(0);
             });
         });

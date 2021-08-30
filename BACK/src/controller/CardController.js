@@ -10,7 +10,7 @@ module.exports = {
         await cardRepository.getCardById(req.params.account_id, req.params.id).then(result => res.json(result)).catch(error => res.json(error));
     },
 
-    create: async(req, res) => {
+    create: async (req, res) => {
         let card = new Card(await cardRepository.getMaxId() + 1, req.body.number, req.body.type, req.body.flag, req.body.limitt, req.body.closed_at, req.body.current_value, req.body.account_id);
 
         card.validateFields();
@@ -22,7 +22,7 @@ module.exports = {
         res.json(card);
     },
 
-    changeCardById: async(req, res) => {
+    changeCardById: async (req, res) => {
         let card = new Card(req.body.id, req.body.number, req.body.type, req.body.flag, req.body.limitt, req.body.closed_at, req.body.current_value, req.body.account_id);
 
         card.validateFields();
@@ -34,7 +34,7 @@ module.exports = {
         res.json(card);
     },
 
-    removeCardById: async(req, res) => {
+    removeCardById: async (req, res) => {
         await cardRepository.removeCardById(req.params.id).then(res.json('Cartão removido com sucesso.')).catch(error => res.json(error));
     },
 

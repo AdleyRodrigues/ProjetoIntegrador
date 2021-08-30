@@ -19,7 +19,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(result[0]);
             });
         });
@@ -27,29 +27,29 @@ module.exports = {
 
     create: (category) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO categories (id, name, account_id) VALUES (?, ?, ?)', 
+            db.query('INSERT INTO categories (id, name, account_id) VALUES (?, ?, ?)',
                 [category.id, category.name, category.account_id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-                
-                accepted(true);
-            });
+
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
     changeCategoryById: (category) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE categories SET name = ? WHERE id = ?', 
+            db.query('UPDATE categories SET name = ? WHERE id = ?',
                 [category.name, category.id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
 
-                accepted(true);
-            });
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
@@ -59,7 +59,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(true);
             });
         });

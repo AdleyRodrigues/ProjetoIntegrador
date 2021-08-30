@@ -19,7 +19,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(result[0]);
             });
         });
@@ -27,29 +27,29 @@ module.exports = {
 
     create: (incoming) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO incomings (id, date, income, account_id) VALUES (?, ?, ?, ?)', 
+            db.query('INSERT INTO incomings (id, date, income, account_id) VALUES (?, ?, ?, ?)',
                 [incoming.id, incoming.date, incoming.income, incoming.account_id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-                
-                accepted(true);
-            });
+
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
     changeIncomingById: (incoming) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE incomings SET date = ?, income = ? WHERE id = ?', 
+            db.query('UPDATE incomings SET date = ?, income = ? WHERE id = ?',
                 [incoming.date, incoming.income, incoming.id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
 
-                accepted(true);
-            });
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
@@ -59,7 +59,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(true);
             });
         });

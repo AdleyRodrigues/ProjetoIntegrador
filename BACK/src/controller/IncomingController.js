@@ -10,7 +10,7 @@ module.exports = {
         await incomingRepository.getIncomingById(req.params.account_id, req.params.id).then(result => res.json(result)).catch(error => res.json(error));
     },
 
-    create: async(req, res) => {
+    create: async (req, res) => {
         let incoming = new Incoming(await incomingRepository.getMaxId() + 1, req.body.date, req.body.amount, req.body.account_id);
 
         incoming.validateFields();
@@ -22,7 +22,7 @@ module.exports = {
         res.json(incoming);
     },
 
-    changeIncomingById: async(req, res) => {
+    changeIncomingById: async (req, res) => {
         let incoming = new Incoming(req.body.id, req.body.date, req.body.amount, req.body.account_id);
 
         incoming.validateFields();
@@ -34,7 +34,7 @@ module.exports = {
         res.json(incoming);
     },
 
-    removeIncomingById: async(req, res) => {
+    removeIncomingById: async (req, res) => {
         await incomingRepository.removeIncomingById(req.params.id).then(res.json('Receita removida com sucesso.')).catch(error => res.json(error));
     },
 

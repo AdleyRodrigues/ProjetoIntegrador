@@ -14,17 +14,17 @@ module.exports = {
     },
 
     create: (parcel) => {
-        
+
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO parcels (id, due_date, amount, expense_id) VALUES (?, ?, ?, ?)', 
+            db.query('INSERT INTO parcels (id, due_date, amount, expense_id) VALUES (?, ?, ?, ?)',
                 [parcel.id, parcel.due_date, parcel.amount, parcel.expense_id], (error, result) => {
-            
-                if (error) {
-                    rejected(error.sqlMessage);
-                }
-                
-                accepted(true);
-            });
+
+                    if (error) {
+                        rejected(error.sqlMessage);
+                    }
+
+                    accepted(true);
+                });
         });
     },
 
@@ -34,7 +34,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-                
+
                 accepted(true);
             });
         });

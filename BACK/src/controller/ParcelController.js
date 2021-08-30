@@ -6,7 +6,7 @@ module.exports = {
         await parcelRepository.getAll(req.params.expense_id).then(results => res.json(results)).catch(error => res.json(error));
     },
 
-    create: async(req, res) => {
+    create: async (req, res) => {
         let parcel = new Parcel(await parcelRepository.getMaxId() + 1, req.body.date, req.body.amount, req.body.expense_id);
 
         parcel.validateFields();
@@ -18,7 +18,7 @@ module.exports = {
         res.json(parcel);
     },
 
-    removeParcels: async(req, res) => {
+    removeParcels: async (req, res) => {
         await parcelRepository.removeParcels(req.params.expense_id).then(res.json('Receita removida com sucesso.')).catch(error => res.json(error));
     },
 }
