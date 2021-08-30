@@ -3,7 +3,7 @@ const db = require('../database');
 module.exports = {
     getAll: (account_id) => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT * FROM expenses WHERE account_id = ?', [account_id], (error, results) => {
+            db.query('SELECT * FROM categories WHERE account_id = ?', [account_id], (error, results) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
@@ -13,22 +13,22 @@ module.exports = {
         });
     },
 
-    getExpenseById: (account_id, id) => {
+    getCategoryById: (account_id, id) => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT * FROM expenses WHERE account_id = ? and id = ?', [account_id, id], (error, result) => {
+            db.query('SELECT * FROM categories WHERE account_id = ? and id = ?', [account_id, id], (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-
+                
                 accepted(result[0]);
             });
         });
     },
 
-    create: (expense) => {
+    create: (category) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO expenses (id, amount, date, description, parcel, status, category_id, card_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                [expense.id, expense.amount, expense.date, expense.description, expense.parcel, expense.status, expense.category_id, expense.card_id, expense.account_id], (error, result) => {
+            db.query('INSERT INTO categories (id, name, account_id) VALUES (?, ?, ?)', 
+                [category.id, category.name, category.account_id], (error, result) => {
             
                 if (error) {
                     rejected(error.sqlMessage);
@@ -39,10 +39,10 @@ module.exports = {
         });
     },
 
-    changeExpenseById: (expense) => {
+    changeCategoryById: (category) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE expenses SET amount = ?, date = ?, description = ?, parcel = ?, status = ?, category_id = ?, card_id = ?, account_id = ? WHERE id = ?', 
-                [expense.amount, expense.date, expense.description, expense.parcel, expense.status, expense.category_id, expense.card_id, expense.account_id, expense.id], (error, result) => {
+            db.query('UPDATE categories SET name = ? WHERE id = ?', 
+                [category.name, category.id], (error, result) => {
             
                 if (error) {
                     rejected(error.sqlMessage);
@@ -53,9 +53,9 @@ module.exports = {
         });
     },
 
-    removeExpenseById: (id) => {
+    removeCategoryById: (id) => {
         return new Promise((accepted, rejected) => {
-            db.query('DELETE FROM expenses WHERE id = ?', [id], (error, result) => {
+            db.query('DELETE FROM categories WHERE id = ?', [id], (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
@@ -67,11 +67,11 @@ module.exports = {
 
     getMaxId: () => {
         return new Promise((accepted, rejected) => {
-            db.query('SELECT MAX(id) as id FROM expenses', (error, result) => {
+            db.query('SELECT MAX(id) as id FROM categories', (error, result) => {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
- 
+
                 result[0].id != null ? accepted(result[0].id) : accepted(0);
             });
         });

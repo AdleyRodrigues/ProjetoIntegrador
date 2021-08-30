@@ -17,5 +17,7 @@ module.exports = {
                     return account;
                 }).catch(error => account.error = error);
         }
+
+        return account;
     }
 }

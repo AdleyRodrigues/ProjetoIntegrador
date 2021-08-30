@@ -24,9 +24,8 @@ module.exports = {
     },
 
     changeAccountById: async (req, res) => {
-        console.log(req.body);
         let avatar = req.file ? `uploads/${req.file.originalname}` : '';
-        let account = new Account(req.params.id, req.body.name, avatar, req.body.email, req.body.password);
+        let account = new Account(req.body.id, req.body.name, avatar, req.body.email, req.body.password);
         
         account.validateFields();
 

@@ -1,15 +1,17 @@
 document.getElementById("login").addEventListener("click", function (event) {
     event.preventDefault();
     
-    axios.post("http://localhost:3000/api/login", {
-        email: document.getElementById("email_login").value,
-        password: document.getElementById("password_login").value
+    axios.post("http://localhost:3000/api/login", {}, {
+        auth: {
+            username: document.getElementById("email_login").value,
+            password: document.getElementById("password_login").value
+        }
     })
     .then(function (response) {
         if (response.data.error) {
             alert(response.data.error);
         } else {
-            window.localStorage.setItem('usuario', JSON.stringify(response.data));
+            window.sessionStorage.setItem('usuario', JSON.stringify(response.data));
             window.location.href = "./admin/index.html";
         }
     })

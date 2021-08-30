@@ -1,4 +1,4 @@
-# integrator
+# Projeto Integrador
 Projeto Integrador
 
 # CONFIGURANDO A API

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Integrador - Despesa</title>
+    <title>Integrador - Categoria</title>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./despesa.html" class="nav-link active">
+                            <a href="./despesa.html" class="nav-link link-dark">
                                 Despesa
                             </a>
                         </li>
@@ -41,7 +41,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./categoria.html" class="nav-link link-dark">
+                            <a href="./categoria.html" class="nav-link active">
                                 Categoria
                             </a>
                         </li>
@@ -54,7 +54,7 @@
                             <strong>Perfil</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalPerfil" id="open_modal_perfil">Atualizar Perfil</button></li>
+                            <li><button id="open_modal_perfil" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalPerfil">Atualizar Perfil</button></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -66,27 +66,10 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Despesas</h1>
+                    <h1 class="h2">Categorias</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" id="nova_despesa">Nova Despesa</button>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" id="open_filter_despesas">
-                                Filtrar
-                            </button>
-                            <form class="dropdown-menu p-4" aria-labelledby="open_filter_despesas">
-                                <div class="mb-3">
-                                    <label for="data_de" class="form-label">De</label>
-                                    <input type="date" class="form-control" id="data_de">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="data_ate" class="form-label">Até</label>
-                                    <input type="date" class="form-control" id="data_ate">
-                                </div>
-                                <button class="btn btn-primary" id="filtrar_receita">Filtrar</button>
-                                <button type="reset" class="btn btn-secondary">Limpar</button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="nova_categoria">Nova Categoria</button>
                         </div>
                     </div>
                 </div>
@@ -94,19 +77,12 @@
                     <thead class="text-center">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">VALOR</th>
-                            <th scope="col">DATA</th>
-                            <th scope="col">DESCRIÇÃO</th>
-                            <th scope="col">PARCELAS</th>
-                            <th scope="col">STATUS</th>
-                            <th scope="col">CATEGORIA</th>
-                            <th scope="col">CARTÃO</th>
-                            <th scope="col"></th>
+                            <th scope="col">NOME</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody id="lista_despesas" class="text-center">
+                    <tbody id="lista_categorias" class="text-center">
                     </tbody>
                 </table>
             </main>
@@ -114,59 +90,21 @@
     </div>
 
     <!-- modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalDespesa">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalCategoria">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-5 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h5 class="modal-title" id="modal-title">Despesa</h5>
+                    <h5 class="modal-title" id="modal-title">Cartão</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-5 pt-0">
                     <form class="">
-                        <input type="hidden" name="" id="despesa_id">
+                        <input type="hidden" name="categoria_id" id="categoria_id">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control rounded-4" id="despesa_valor">
-                            <label for="despesa_valor">Valor</label>
+                            <input type="text" class="form-control rounded-4" id="categoria_nome">
+                            <label for="categoria_nome">Nome</label>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control rounded-4" id="despesa_date">
-                            <label for="despesa_date">Data</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-4" id="despesa_descricao">
-                            <label for="despesa_descricao">Descrição</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="" id="despesa_parcela">
-                                <option selected></option>
-                                <option value="1">1x</option>
-                                <option value="2">2x</option>
-                                <option value="3">3x</option>
-                                <option value="4">4x</option>
-                                <option value="5">5x</option>
-                                <option value="6">6x</option>
-                                <option value="7">7x</option>
-                                <option value="8">8x</option>
-                                <option value="9">9x</option>
-                                <option value="10">10x</option>
-                                <option value="11">11x</option>
-                                <option value="12">12x</option>
-                            </select>
-                            <label for="despesa_parcela">Parcelas</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="despesa_status">
-                            <label class="form-check-label" for="despesa_status">Pago?</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="" id="despesa_categoria"></select>
-                            <label for="despesa_categoria">Categoria</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="" id="despesa_cartao"></select>
-                            <label for="despesa_cartao">Cartão</label>
-                        </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" id="cadastrar_despesa">Cadastrar</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" id="cadastrar_categoria">Cadastrar</button>
                     </form>
                 </div>
             </div>
@@ -210,36 +148,12 @@
         </div>
     </div>
 
-    <!-- modal parcelas -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalParcelas">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content rounded-5 shadow">
-                <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h5 class="modal-title" id="modal-title">Parcelas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-5 pt-0">
-                    <table class="table table-hover">
-                        <thead class="text-center">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">DATA</th>
-                                <th scope="col">VALOR</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista_parcelas" class="text-center"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="../assets/js/admin/despesa.js"></script>
+    <script src="../assets/js/admin/categoria.js"></script>
     <script src="../assets/js/admin/profile.js"></script>
     <script src="../assets/js/admin/logout.js"></script>
 </body>

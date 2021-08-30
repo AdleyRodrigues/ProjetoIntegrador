@@ -28,17 +28,21 @@ CREATE TABLE incomings (
 
 CREATE TABLE categories (
     id INTEGER PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE
+    name VARCHAR(50) NOT NULL UNIQUE,
+    account_id INTEGER NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE cards (
     id INTEGER PRIMARY KEY,
-    number INTEGER NOT NULL UNIQUE,
+    number VARCHAR(20) NOT NULL UNIQUE,
     type VARCHAR(20) NOT NULL,
     flag VARCHAR(20) NOT NULL,
     limitt DECIMAL(10,2) NOT NULL,
-    closed_at DATE NOT NULL,
-    current_value DECIMAL(10,2)
+    closed_at SMALLINT NOT NULL,
+    current_value DECIMAL(10,2),
+    account_id INTEGER NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE expenses (
@@ -60,6 +64,6 @@ CREATE TABLE parcels (
     id INTEGER PRIMARY KEY,
     due_date DATE NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    expenses_id INTEGER NOT NULL,
-    FOREIGN KEY (expenses_id) REFERENCES expenses(id) ON DELETE CASCADE
+    expense_id INTEGER NOT NULL,
+    FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE CASCADE
 );

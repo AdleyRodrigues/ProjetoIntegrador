@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-const sqlite3 = require('sqlite3').verbose();
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,

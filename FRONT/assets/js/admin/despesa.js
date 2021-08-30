@@ -1,16 +1,121 @@
-const { getAll } = require("../../../../api/src/repository/ExpenseRepository");
-
-const usuario = JSON.parse(localStorage.getItem('usuario'));
+const usuario = JSON.parse(sessionStorage.getItem('usuario'));
+var cartoes = null;
+var categorias = null;
 
 window.onload = () => {
+    axios.get(`http://localhost:3000/api/categories/${usuario.id}`, {
+        auth: {
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
+        }    
+    })
+    .then(function (response) {
+        if (response.data.error) {
+            alert(response.data.error);
+        } else {
+            if (response.data.length > 0) {
+                categorias = response.data;
+            }
+        }
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+
+    axios.get(`http://localhost:3000/api/cards/${usuario.id}`, {
+        auth: {
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
+        }    
+    })
+    .then(function (response) {
+        if (response.data.error) {
+            alert(response.data.error);
+        } else {
+            if (response.data.length > 0) {
+                cartoes = response.data;
+            } 
+        }
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+
     getAll();
 }
+
+document.getElementById("cadastrar_despesa").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    if (document.getElementById("despesa_id").value == "") {
+        axios.post("http://localhost:3000/api/expenses/create", {
+            amount: document.getElementById("despesa_valor").value,
+            date: document.getElementById("despesa_date").value,
+            description: document.getElementById("despesa_descricao").value,
+            parcel: document.getElementById("despesa_parcela").value,
+            status: document.getElementById("despesa_status").checked ? 1 : 0,
+            category_id: $("#despesa_categoria option:selected").val(),
+            card_id: $("#despesa_cartao option:selected").val(),
+            account_id: usuario ? usuario.id : null
+        }, {
+            auth: {
+                username: usuario ? usuario.email : null,
+                password: usuario ? usuario.password : null
+            }
+        })
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+                $('#modalDespesa').modal('hide');
+                setTimeout(() => {
+                    alert("Despesa cadastrada.");
+                }, 200);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
+    } else {
+        axios.put("http://localhost:3000/api/expenses/edit", {
+            id: document.getElementById("despesa_id").value,
+            amount: document.getElementById("despesa_valor").value,
+            date: document.getElementById("despesa_date").value,
+            description: document.getElementById("despesa_descricao").value,
+            parcel: document.getElementById("despesa_parcela").value,
+            status: document.getElementById("despesa_status").checked ? 1 : 0,
+            category_id: $("#despesa_categoria option:selected").val(),
+            card_id: $("#despesa_cartao option:selected").val(),
+            account_id: usuario ? usuario.id : null
+        }, {
+            auth: {
+                username: usuario ? usuario.email : null,
+                password: usuario ? usuario.password : null
+            }
+        })
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+                $('#modalDespesa').modal('hide');
+                setTimeout(() => {
+                    alert("Despesa atualizada.");
+                }, 200);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
+    }
+});
 
 function getAll() {
     axios.get(`http://localhost:3000/api/expenses/${usuario.id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }    
     })
     .then(function (response) {
@@ -31,10 +136,10 @@ function getAll() {
 }
 
 function getById(id) {
-    axios.get(`http://localhost:3000/api/incomings/${id}`, {
+    return axios.get(`http://localhost:3000/api/expenses/${usuario.id}/${id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }    
     })
     .then(function (response) {
@@ -52,8 +157,6 @@ function getById(id) {
 function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_despesas");
     tableRef.innerHTML = "";
-    //tableRef.removeChild();
-    //tableRef.remove();
 
     elements.forEach(element => {
         let id = element.id;
@@ -61,9 +164,17 @@ function tableBodyElements(elements) {
         let date = moment(element.date).format('DD/MM/YYYY');
         let description = element.description;
         let parcel = element.parcel;
-        let status = element.status;
-        let category_id = element.category_id;
-        let card_id = element.card_id;
+        let status = element.status == 0 ? 'Não Pago' : 'Pago';
+        let category_id = categorias.find(cat => {
+            if (cat.id == element.category_id) {
+                return cat.name;
+            } 
+        });
+        let card_id = cartoes.find(cartao => {
+            if (cartao.id == element.card_id) {
+                return cartao.number;
+            }
+        });
         
         tableRef.innerHTML += 
         `<tr>
@@ -73,32 +184,62 @@ function tableBodyElements(elements) {
             <td>${description}</td>
             <td>${parcel}</td>
             <td>${status}</td>
-            <td>${category_id}</td>
-            <td>${card_id}</td>
+            <td>${category_id.name}</td>
+            <td>${card_id.number}</td>
             <td>
-                <button onclick="details(${id})" data-toggle="tooltip" title="Detalhes" data-placement="top">
+                <a onclick="parcels(${id})" data-toggle="tooltip" title="Ver parcelas" data-placement="top" style="cursor: pointer;">
                     <i class="bi bi-eye-fill" style="color: black;"></i>
-                </button>
+                </a>
             </td>
             <td>
-                <button onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top">
+                <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
                     <i class="bi bi-pencil-square" style="color: blue;"></i>
-                </button>
+                </a>
             </td>
             <td>
-                <button onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top">
+                <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
                     <i class="bi bi-trash" style="color: red;"></i>
-                </button>
+                </a>
             </td>
         </tr>`;
     });
 }
 
-function remove(id) {   
-    axios.delete(`http://localhost:3000/api/expenses/${id}`, {}, {
+function parcels(id) {
+    axios.get(`http://localhost:3000/api/parcels/${id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
+        }    
+    })
+    .then(function (response) {
+        if (response.data.error) {
+            alert(response.data.error);
+        } else {
+            $('#modalParcelas').modal('show');
+            let tableRef = document.getElementById("lista_parcelas");
+            tableRef.innerHTML = "";
+
+            response.data.forEach(element => {
+                tableRef.innerHTML += 
+                `<tr>
+                    <td>${element.id}</td>
+                    <td>${moment(element.due_date).format('YYYY-MM-DD')}</td>
+                    <td>${element.amount}</td>
+                </tr>`;
+            });
+        }
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+}
+
+function remove(id) {   
+    axios.delete(`http://localhost:3000/api/expenses/${id}`, {
+        auth: {
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }   
     })
     .then(function (response) {
@@ -106,7 +247,9 @@ function remove(id) {
             alert(response.data.error);
         } else {
             getAll();
-            alert(response.data);
+            setTimeout(() => {
+                alert(response.data);
+            }, 100); 
         }
     })
     .catch(function (error) {
@@ -115,34 +258,71 @@ function remove(id) {
 }
 
 function edit(id) {
-    expense = getById(id);
+    fillSelects();
 
-    if (income) {
-        $('#modalNovaReceita').modal('show');
-        $('#receita_date').val(income.date);
-        $('#receita_value').val(income.income);
-    }
-    
-    axios.put("http://localhost:3000/api/incomings/", {
-        id: income.id,
-        date: $('#receita_date').val(),
-        amount: $('#receita_value').val(),
-        account_id: usuario ? usuario.id : null
-    }, {
-        auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
-            alert(response.data);
-        }
-    })
-    .catch(function (error) {
-        alert(error);
+    getById(id).then((result) => {
+        $('#modalDespesa').modal('show');
+        $('#despesa_id').val(result.id);
+        $('#despesa_valor').val(result.amount);
+        $('#despesa_date').val((moment(result.date).format('YYYY-MM-DD')));
+        $('#despesa_descricao').val(result.description);
+        $('#despesa_parcela').val(result.parcel);
+        result.status == 0 ? $('#despesa_status').attr("checked", false) : $('#despesa_status').attr("checked", true);
+        $('#despesa_categoria').val(result.category_id);
+        $('#despesa_cartao').val(result.card_id);
     });
+}
+
+document.getElementById("nova_despesa").addEventListener("click", function (event) {
+    $('#modalDespesa').modal('show');
+    $('#despesa_id').val("");
+    $('#despesa_valor').val("");
+    $('#despesa_data').val("");
+    $('#despesa_descricao').val("");
+    $('#despesa_parcela').val("");
+    $('#despesa_status').val("");
+
+    fillSelects();
+});
+
+function fillSelects() {
+    if (categorias) {
+        document.getElementById("despesa_categoria").innerHTML = ""
+        let option = document.createElement('option');
+        option.text = "Selecione";
+        option.selected = true;
+        document.getElementById("despesa_categoria").append(option);
+
+        categorias.forEach(categoria => {
+            option = document.createElement('option');
+            option.text = categoria.name;
+            option.value = categoria.id;
+            document.getElementById("despesa_categoria").append(option);
+        })
+    } else {
+        let option = document.createElement('option');
+        option.text = "Nenhuma categoria cadastrada";
+        option.selected = true;
+        document.getElementById("despesa_categoria").append(option);
+    }
+
+    if (cartoes) {
+        document.getElementById("despesa_cartao").innerHTML = "";
+        let option = document.createElement('option');
+        option.text = "Selecione";
+        option.selected = true;
+        document.getElementById("despesa_cartao").append(option);
+
+        cartoes.forEach(cartao => {
+            option = document.createElement('option');
+            option.text = cartao.number;
+            option.value = cartao.id;
+            document.getElementById("despesa_cartao").append(option);
+        })
+    } else {
+        let option = document.createElement('option');
+        option.text = "Nenhum cartão cadastrado";
+        option.selected = true;
+        document.getElementById("despesa_cartao").append(option);
+    }
 }

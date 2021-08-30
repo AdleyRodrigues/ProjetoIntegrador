@@ -1,4 +1,4 @@
-const usuario = JSON.parse(localStorage.getItem('usuario'));
+const usuario = JSON.parse(sessionStorage.getItem('usuario'));
 
 window.onload = () => {
     getAll();
@@ -7,21 +7,82 @@ window.onload = () => {
 document.getElementById("cadastrar_receita").addEventListener("click", function (event) {
     event.preventDefault();
     
-    axios.post("http://localhost:3000/api/incomings/create", {
-        date: document.getElementById("receita_date").value,
-        amount: document.getElementById("receita_value").value,
-        account_id: usuario ? usuario.id : null
+    if (document.getElementById("receita_id").value == "") {
+        axios.post("http://localhost:3000/api/incomings/create", {
+            date: document.getElementById("receita_date").value,
+            amount: document.getElementById("receita_value").value,
+            account_id: usuario ? usuario.id : null
+        }, {
+            auth: {
+                username: usuario ? usuario.email : null,
+                password: usuario ? usuario.password : null
+            }
+        })
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+                $('#modalReceita').modal('hide');
+                setTimeout(() => {
+                    alert("Receita cadastrada.");
+                }, 200);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
+    } else {
+        axios.put("http://localhost:3000/api/incomings/edit", {
+            id: document.getElementById("receita_id").value,
+            date: document.getElementById("receita_date").value,
+            amount: document.getElementById("receita_value").value,
+            account_id: usuario ? usuario.id : null
+        }, {
+            auth: {
+                username: usuario ? usuario.email : null,
+                password: usuario ? usuario.password : null
+            }
+        })
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+                $('#modalReceita').modal('hide');
+                setTimeout(() => {
+                    alert("Receita atualizada.");
+                }, 200);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
+    }
+});
+
+document.getElementById("filtrar_receita").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    if (!document.getElementById("data_de").value && !document.getElementById("data_ate").value) {
+        alert("Nenhuma data selecionada");
+        return;
+    }
+    
+    axios.post("http://localhost:3000/api/incomings/filter", {
+        date_from: document.getElementById("data_de").value,
+        date_to: document.getElementById("data_ate").value,
     }, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }
     })
     .then(function (response) {
         if (response.data.error) {
             alert(response.data.error);
         } else {
-            getAll();
+            tableBodyElements(response.data);
         }
     })
     .catch(function (error) {
@@ -32,8 +93,8 @@ document.getElementById("cadastrar_receita").addEventListener("click", function 
 function getAll() {
     axios.get(`http://localhost:3000/api/incomings/${usuario.id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }    
     })
     .then(function (response) {
@@ -54,10 +115,10 @@ function getAll() {
 }
 
 function getById(id) {
-    axios.get(`http://localhost:3000/api/incomings/${id}`, {
+    return axios.get(`http://localhost:3000/api/incomings/${usuario.id}/${id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }    
     })
     .then(function (response) {
@@ -74,10 +135,7 @@ function getById(id) {
 
 function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_receitas");
-    
-    tableRef.innerHTML = "";
-    //tableRef.removeChild();
-    //tableRef.remove();
+    document.getElementById("lista_receitas").innerHTML = "";
 
     elements.forEach(element => {
         let id = element.id;
@@ -88,24 +146,24 @@ function tableBodyElements(elements) {
         `<tr>
             <td>${id}</td><td>${date}</td><td>${amount}</td>
             <td>
-                <button onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top">
+                <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
                     <i class="bi bi-pencil-square" style="color: blue;"></i>
-                </button>
+                </a>
             </td>
             <td>
-                <button onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top">
+                <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
                     <i class="bi bi-trash" style="color: red;"></i>
-                </button>
+                </a>
             </td>
         </tr>`;
     });
 }
 
 function remove(id) {    
-    axios.delete("http://localhost:3000/api/incomings/" + id, {}, {
+    axios.delete(`http://localhost:3000/api/incomings/${id}`, {
         auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
         }   
     })
     .then(function (response) {
@@ -113,7 +171,9 @@ function remove(id) {
             alert(response.data.error);
         } else {
             getAll();
-            alert(response.data);
+            setTimeout(() => {
+                alert(response.data);
+            }, 100); 
         }
     })
     .catch(function (error) {
@@ -122,34 +182,17 @@ function remove(id) {
 }
 
 function edit(id) {
-    income = getById(id);
-
-    if (income) {
-        $('#modalNovaReceita').modal('show');
-        $('#receita_date').val(income.date);
-        $('#receita_value').val(income.income);
-    }
-    
-    axios.put("http://localhost:3000/api/incomings/", {
-        id: income.id,
-        date: $('#receita_date').val(),
-        amount: $('#receita_value').val(),
-        account_id: usuario ? usuario.id : null
-    }, {
-        auth: {
-            name: usuario ? usuario.email : null,
-            pass: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
-            alert(response.data);
-        }
-    })
-    .catch(function (error) {
-        alert(error);
+    getById(id).then((result) => {
+        $('#modalReceita').modal('show');
+        $('#receita_id').val(result.id);
+        $('#receita_date').val(moment(result.date).format('YYYY-MM-DD'));
+        $('#receita_value').val(result.income);
     });
 }
+
+document.getElementById("nova_receita").addEventListener("click", function (event) {
+    $('#modalReceita').modal('show');
+    $('#receita_id').val("");
+    $('#receita_date').val("");
+    $('#receita_value').val("");
+});

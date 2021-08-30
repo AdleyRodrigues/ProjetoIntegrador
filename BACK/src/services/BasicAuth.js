@@ -8,12 +8,12 @@ basicAuth = async (req, res, next) => {
     let account = new Account();
     account.email = name;
     account.password = pass;
-    
     loginController.login(account).then(result => {
         if (result.error) {
             res.json(result);
         }
-    
+
+        req.account = account;
         next();
     }).catch(error => {
         res.json(error);

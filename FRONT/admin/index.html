@@ -36,12 +36,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link link-dark">
+                                <a href="./cartao.html" class="nav-link link-dark">
                                     Cartões
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link link-dark">
+                                <a href="./categoria.html" class="nav-link link-dark">
                                     Categoria
                                 </a>
                             </li>
@@ -50,15 +50,15 @@
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                                <img src="" alt="" width="32" height="32" class="rounded-circle me-2" id="profile_image">
                                 <strong>Perfil</strong>
                             </a>
                             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                                <li><a class="dropdown-item" href="#">Atualizar Perfil</a></li>
+                                <li><button id="open_modal_perfil" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalPerfil">Atualizar Perfil</button></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Sair</a></li>
+                                <li><a class="dropdown-item" href="../index.html" id="logout">Sair</a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,6 +85,43 @@
                 </main>
             </div>
         </div>
+
+        <!-- perfil -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalPerfil">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content rounded-5 shadow">
+                    <div class="modal-header p-5 pb-4 border-bottom-0">
+                        <h5 class="modal-title" id="modal-title">Perfil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5 pt-0">
+                        <form class="">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control rounded-4" id="name_create" placeholder="Nome">
+                                <label for="name">Nome</label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="avatar" class="form-label">Avatar</label>
+                                <input type="file" class="form-control rounded-4" id="avatar_create">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control rounded-4" id="email_create" placeholder="name@example.com">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control rounded-4" id="password_create" placeholder="Senha">
+                                <label for="password">Senha</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control rounded-4" id="password_confirm" placeholder="Confirmar senha">
+                                <label for="password_confirm">Confirmar senha</label>
+                            </div>
+                            <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" id="mudar_perfil">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- JavaScript Bundle with Popper -->
@@ -92,5 +129,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="../assets/js/admin/index.js"></script>
+    <script src="../assets/js/admin/profile.js"></script>
+    <script src="../assets/js/admin/logout.js"></script>
 </body>
 </html>
