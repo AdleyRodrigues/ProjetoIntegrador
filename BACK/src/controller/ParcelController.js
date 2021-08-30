@@ -3,7 +3,9 @@ const parcelRepository = require('../repository/ParcelRepository');
 
 module.exports = {
     getAll: async (req, res) => {
-        await parcelRepository.getAll(req.params.expense_id).then(results => res.json(results)).catch(error => res.json(error));
+        await parcelRepository.getAll(req.params.expense_id)
+            .then(results => res.json(results))
+            .catch(error => res.json(error));
     },
 
     create: async (req, res) => {
@@ -19,6 +21,8 @@ module.exports = {
     },
 
     removeParcels: async (req, res) => {
-        await parcelRepository.removeParcels(req.params.expense_id).then(res.json('Receita removida com sucesso.')).catch(error => res.json(error));
+        await parcelRepository.removeParcels(req.params.expense_id)
+            .then(res.json('Receita removida com sucesso.'))
+            .catch(error => res.json(error));
     },
 }

@@ -9,11 +9,15 @@ module.exports = {
     },
 
     getExpenseById: async (req, res) => {
-        await expenseRepository.getExpenseById(req.params.account_id, req.params.id).then(result => res.json(result)).catch(error => res.json(error));
+        await expenseRepository.getExpenseById(req.params.account_id, req.params.id)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
     getAccountByEmail: async (req, res) => {
-        await expenseRepository.getAccountByEmail(req.params.email).then(result => res.json(result)).catch(error => res.json(error));
+        await expenseRepository.getAccountByEmail(req.params.email)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
     create: async (req, res) => {
