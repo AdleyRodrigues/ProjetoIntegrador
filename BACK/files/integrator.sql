@@ -17,7 +17,7 @@ CREATE TABLE accounts (
 	password VARCHAR(100) NOT NULL
 );
 
-#receitas
+
 CREATE TABLE incomings (
     id INTEGER PRIMARY KEY,
     date DATE NOT NULL,
@@ -37,14 +37,14 @@ CREATE TABLE cards (
     id INTEGER PRIMARY KEY,
     number VARCHAR(20) NOT NULL UNIQUE,
     type VARCHAR(20) NOT NULL,
-    flag VARCHAR(20) NOT NULL,
+    flag SMALLINT NOT NULL,
     limitt DECIMAL(10,2) NOT NULL,
     closed_at SMALLINT NOT NULL,
     current_value DECIMAL(10,2),
     account_id INTEGER NOT NULL,
     FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
-#despesas
+
 CREATE TABLE expenses (
     id INTEGER PRIMARY KEY,
     amount DECIMAL(10,2) NOT NULL,
