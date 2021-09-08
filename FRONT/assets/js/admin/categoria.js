@@ -23,9 +23,6 @@ document.getElementById("cadastrar_categoria").addEventListener("click", functio
             } else {
                 getAll();
                 $('#modalCategoria').modal('hide');
-                setTimeout(() => {
-                    alert("Categoria cadastrada.");
-                }, 200);
             }
         })
         .catch(function (error) {
@@ -70,12 +67,10 @@ function getAll() {
         if (response.data.error) {
             alert(response.data.error);
         } else {
+            console.log(response.data);
             if (response.data.length > 0) {
                 tableBodyElements(response.data);
-            } else {
-                alert("Nenhum registro encontrado");
             }
-            
         }
     })
     .catch(function (error) {
@@ -106,7 +101,7 @@ function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_categorias");
     tableRef.innerHTML = "";
 
-    if (elements.length > 0) {
+    if (elements) {
         elements.forEach(element => {
             let id = element.id;
             let name = element.name;

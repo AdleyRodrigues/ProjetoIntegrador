@@ -1,3 +1,6 @@
+document.getElementById("profile_image").setAttribute("src", `http://localhost:3000/${usuario.avatar}`);
+document.getElementById("profile_image").setAttribute("alt", usuario.name);
+
 document.getElementById("mudar_perfil").addEventListener("click", function (event) {
     event.preventDefault();
 

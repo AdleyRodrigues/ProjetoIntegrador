@@ -28,9 +28,6 @@ document.getElementById("cadastrar_cartao").addEventListener("click", function (
             } else {
                 getAll();
                 $('#modalCartao').modal('hide');
-                setTimeout(() => {
-                    alert("Cartão cadastrado.");
-                }, 200);
             }
         })
         .catch(function (error) {
@@ -80,12 +77,7 @@ function getAll() {
         if (response.data.error) {
             alert(response.data.error);
         } else {
-            if (response.data.length > 0) {
-                tableBodyElements(response.data);
-            } else {
-                alert("Nenhum registro encontrado");
-            }
-            
+            tableBodyElements(response.data);
         }
     })
     .catch(function (error) {
@@ -116,7 +108,7 @@ function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_cartoes");
     document.getElementById("lista_cartoes").innerHTML = "";
 
-    if (elements.length > 0) {
+    if (elements) {
         elements.forEach(element => {
             let id = element.id;
             let number = element.number;
@@ -124,36 +116,21 @@ function tableBodyElements(elements) {
             let closed_at = element.closed_at;
             let type = element.type == 1 ? "Débito" : "Crédito";
             let current_value = element.current_value;
-            let flag;
             
-            switch (element.flag) {
-                case "1":
-                    flag = "VISA";
-                    break;
-
-                case "2":
-                    flag = "CREDICARD";
-                    break;
-
-                case "3":
-                    flag = "NUBANK";
-                    break;
-
-                case "4":
-                    flag = "MASTERCARD";
-                    break;
-
-                case "5":
-                    flag = "FITBANK";
-                    break;
-            }
+            let flag = {
+                1: "VISA",
+                2: "CREDICARD",
+                3: "NUBANK",
+                4: "MASTERCARD",
+                5: "FITBANK",
+            };
             
             tableRef.innerHTML += 
             `<tr>
                 <td>${id}</td>
                 <td>${number}</td>
                 <td>${type}</td>
-                <td>${flag}</td>
+                <td>${flag[element.flag]}</td>
                 <td>${limitt}</td>
                 <td>${closed_at}</td>
                 <td>${current_value}</td>
@@ -184,9 +161,6 @@ function remove(id) {
             alert(response.data.error);
         } else {
             getAll();
-            setTimeout(() => {
-                alert(response.data);
-            }, 100); 
         }
     })
     .catch(function (error) {

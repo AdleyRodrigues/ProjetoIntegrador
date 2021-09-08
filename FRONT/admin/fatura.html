@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Integrador - Receita</title>
+    <title>Integrador - Fatura</title>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./receita.html" class="nav-link active">
+                            <a href="./receita.html" class="nav-link link-dark">
                                 Receita
                             </a>
                         </li>
@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./fatura.html" class="nav-link link-dark">
+                            <a href="./fatura.html" class="nav-link active">
                                 Fatura
                             </a>
                         </li>
@@ -71,70 +71,92 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Receitas</h1>
+                    <h1 class="h2">Fatura</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" id="nova_receita">Nova Receita</button>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" id="open_filter_receitas">
-                                Filtrar
-                            </button>
-                            <form class="dropdown-menu p-4" aria-labelledby="open_filter_receitas">
-                                <div class="mb-3">
-                                    <label for="data_de" class="form-label">De</label>
-                                    <input type="date" class="form-control" id="data_de">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="data_ate" class="form-label">Até</label>
-                                    <input type="date" class="form-control" id="data_ate">
-                                </div>
-                                <button class="btn btn-primary" id="filtrar_receita">Filtrar</button>
-                                <button type="reset" class="btn btn-secondary">Limpar</button>
-                            </form>
+                            <select class="form-select" name="" id="card_select"></select>
                         </div>
                     </div>
                 </div>
-                <table class="table table-hover">
-                    <thead class="text-center">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">DATA</th>
-                            <th scope="col">VALOR</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista_receitas" class="text-center">
-                    </tbody>
-                </table>
-            </main>
-        </div>
-    </div>
+                
 
-    <!-- modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalReceita">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content rounded-5 shadow">
-                <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h5 class="modal-title" id="modal-title">Receita</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-5 pt-0">
-                    <form class="">
-                        <input type="hidden" name="" id="receita_id">
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control rounded-4" id="receita_date">
-                            <label for="receita_date">Data</label>
+                <div class="row" style="display: none;" id="invoice">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="row p-5">
+                                    <div class="col-md-3">
+                                        <select class="form-select" id="card_select_month" disabled>
+                                            <option value="1">Janeiro</option>
+                                            <option value="2">Fevereiro</option>
+                                            <option value="3">Março</option>
+                                            <option value="4">Abril</option>
+                                            <option value="5">Maio</option>
+                                            <option value="6">Junho</option>
+                                            <option value="7">Julho</option>
+                                            <option value="8">Agosto</option>
+                                            <option value="9">Setembro</option>
+                                            <option value="10">Outubro</option>
+                                            <option value="11">Novembro</option>
+                                            <option value="12">Dezembro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3"></div>            
+                                    <div class="col-md-6 text-right">
+                                        <p class="font-weight-bold mb-1">Dia de Fechamento da Fatura</p>
+                                        <p class="text-muted" id="date_closed_at"></p>
+                                    </div>
+                                </div>
+            
+                                <hr class="my-5">
+            
+                                <div class="row pb-5 p-5">
+                                    <div class="col-md-6">
+                                        <p class="font-weight-bold mb-4">Informações do Cliente</p>
+                                        <p class="mb-1" id="account_name"></p>
+                                        <p class="mb-1" id="account_email"></p>
+                                    </div>
+            
+                                    <div class="col-md-6 text-right">
+                                        <p class="font-weight-bold mb-4">Detalhes do Cartão</p>
+                                        <p class="mb-1" id="card_type"></p>
+                                        <p class="mb-1" id="card_number"></p>
+                                        <p class="mb-1" id="card_limitt"></p>
+                                        <p class="mb-1" id="card_current_value"></p>
+                                    </div>
+                                </div>
+            
+                                <div class="row p-5">
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">ID</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">DATA DA COMPRA</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">DESCRIÇÃO</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">CATEGORIA</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">STATUS</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">PARCELAS</th>
+                                                    <th class="border-0 text-uppercase small font-weight-bold">VALOR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_expenses_lista"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+            
+                                <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                                    <div class="py-3 px-5 text-right">
+                                        <div class="mb-2">Total</div>
+                                        <div class="h2 font-weight-light" id="total_amount"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control rounded-4" id="receita_value" placeholder="R$">
-                            <label for="receita_value">Valor</label>
-                        </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" id="cadastrar_receita">Cadastrar</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+            </main>
         </div>
     </div>
 
@@ -180,7 +202,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="../assets/js/admin/receita.js"></script>
+    <script src="../assets/js/admin/fatura.js"></script>
     <script src="../assets/js/admin/profile.js"></script>
     <script src="../assets/js/admin/logout.js"></script>
 </body>

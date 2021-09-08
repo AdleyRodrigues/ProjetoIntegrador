@@ -24,9 +24,6 @@ document.getElementById("cadastrar_receita").addEventListener("click", function 
             } else {
                 getAll();
                 $('#modalReceita').modal('hide');
-                setTimeout(() => {
-                    alert("Receita cadastrada.");
-                }, 200);
             }
         })
         .catch(function (error) {
@@ -101,12 +98,7 @@ function getAll() {
         if (response.data.error) {
             alert(response.data.error);
         } else {
-            if (response.data.length > 0) {
-                tableBodyElements(response.data);
-            } else {
-                alert("Nenhum registro encontrado");
-            }
-            
+            tableBodyElements(response.data);
         }
     })
     .catch(function (error) {
@@ -137,26 +129,28 @@ function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_receitas");
     document.getElementById("lista_receitas").innerHTML = "";
 
-    elements.forEach(element => {
-        let id = element.id;
-        let date = moment(element.date).format('DD/MM/YYYY');
-        let amount = element.income;
-        
-        tableRef.innerHTML += 
-        `<tr>
-            <td>${id}</td><td>${date}</td><td>${amount}</td>
-            <td>
-                <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
-                    <i class="bi bi-pencil-square" style="color: blue;"></i>
-                </a>
-            </td>
-            <td>
-                <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
-                    <i class="bi bi-trash" style="color: red;"></i>
-                </a>
-            </td>
-        </tr>`;
-    });
+    if (elements) {
+        elements.forEach(element => {
+            let id = element.id;
+            let date = moment(element.date).format('DD/MM/YYYY');
+            let amount = element.income;
+            
+            tableRef.innerHTML += 
+            `<tr>
+                <td>${id}</td><td>${date}</td><td>${amount}</td>
+                <td>
+                    <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
+                        <i class="bi bi-pencil-square" style="color: blue;"></i>
+                    </a>
+                </td>
+                <td>
+                    <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
+                        <i class="bi bi-trash" style="color: red;"></i>
+                    </a>
+                </td>
+            </tr>`;
+        });
+    }
 }
 
 function remove(id) {    
@@ -171,9 +165,6 @@ function remove(id) {
             alert(response.data.error);
         } else {
             getAll();
-            setTimeout(() => {
-                alert(response.data);
-            }, 100); 
         }
     })
     .catch(function (error) {

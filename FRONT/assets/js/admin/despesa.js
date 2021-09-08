@@ -1,6 +1,13 @@
 const usuario = JSON.parse(sessionStorage.getItem('usuario'));
 var cartoes = null;
 var categorias = null;
+var fllag = {
+    1: "VISA",
+    2: "CREDICARD",
+    3: "NUBANK",
+    4: "MASTERCARD",
+    5: "FITBANK"
+};
 
 window.onload = () => {
     axios.get(`http://localhost:3000/api/categories/${usuario.id}`, {
@@ -55,7 +62,7 @@ document.getElementById("cadastrar_despesa").addEventListener("click", function 
             parcel: document.getElementById("despesa_parcela").value,
             status: document.getElementById("despesa_status").checked ? 1 : 0,
             category_id: $("#despesa_categoria option:selected").val(),
-            card_id: $("#despesa_cartao option:selected").val() == "Selecione" ? "" : $("#despesa_cartao option:selected").val(),
+            card_id: $("#despesa_cartao option:selected").val(),
             account_id: usuario ? usuario.id : null
         }, {
             auth: {
@@ -69,9 +76,6 @@ document.getElementById("cadastrar_despesa").addEventListener("click", function 
             } else {
                 getAll();
                 $('#modalDespesa').modal('hide');
-                setTimeout(() => {
-                    alert("Despesa cadastrada.");
-                }, 200);
             }
         })
         .catch(function (error) {
@@ -122,12 +126,7 @@ function getAll() {
         if (response.data.error) {
             alert(response.data.error);
         } else {
-            if (response.data.length > 0) {
-                tableBodyElements(response.data);
-            } else {
-                alert("Nenhum registro encontrado");
-            }
-            
+            tableBodyElements(response.data);
         }
     })
     .catch(function (error) {
@@ -158,51 +157,58 @@ function tableBodyElements(elements) {
     let tableRef = document.getElementById("lista_despesas");
     tableRef.innerHTML = "";
 
-    elements.forEach(element => {
-        let id = element.id;
-        let amount = element.amount;
-        let date = moment(element.date).format('DD/MM/YYYY');
-        let description = element.description;
-        let parcel = element.parcel;
-        let status = element.status == 0 ? 'Não Pago' : 'Pago';
-        let category_id = categorias.find(cat => {
-            if (cat.id == element.category_id) {
-                return cat.name;
-            } 
-        });
-        let card_id = cartoes.find(cartao => {
-            if (cartao.id == element.card_id) {
-                return cartao.number;
+    if (elements) {
+        elements.forEach(element => {
+            let id = element.id;
+            let amount = element.amount;
+            let date = moment(element.date).format('DD/MM/YYYY');
+            let description = element.description;
+            let parcel = element.parcel;
+            let status = element.status == 0 ? 'Não Pago' : 'Pago';
+            let category_id = categorias.find(cat => {
+                if (cat.id == element.category_id) {
+                    return cat.name;
+                } 
+            });
+
+            let card;
+            
+            if (cartoes) {
+                card = element.card_id ? cartoes.find(cartao => {
+                    if (cartao.id == element.card_id) {
+                        return cartao;
+                    }
+                }) : null;
             }
+
+            tableRef.innerHTML += 
+            `<tr>
+                <td>${id}</td>
+                <td>${amount}</td>
+                <td>${date}</td>
+                <td>${description}</td>
+                <td>${parcel}</td>
+                <td>${status}</td>
+                <td>${category_id.name}</td>
+                <td>${card ? `${fllag[card.flag]} - ${card.number}` : "A VISTA"}</td>
+                <td>
+                    <a onclick="parcels(${id})" data-toggle="tooltip" title="Ver parcelas" data-placement="top" style="cursor: pointer;">
+                        <i class="bi bi-eye-fill" style="color: black;"></i>
+                    </a>
+                </td>
+                <td>
+                    <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
+                        <i class="bi bi-pencil-square" style="color: blue;"></i>
+                    </a>
+                </td>
+                <td>
+                    <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
+                        <i class="bi bi-trash" style="color: red;"></i>
+                    </a>
+                </td>
+            </tr>`;
         });
-        
-        tableRef.innerHTML += 
-        `<tr>
-            <td>${id}</td>
-            <td>${amount}</td>
-            <td>${date}</td>
-            <td>${description}</td>
-            <td>${parcel}</td>
-            <td>${status}</td>
-            <td>${category_id.name}</td>
-            <td>${card_id.number}</td>
-            <td>
-                <a onclick="parcels(${id})" data-toggle="tooltip" title="Ver parcelas" data-placement="top" style="cursor: pointer;">
-                    <i class="bi bi-eye-fill" style="color: black;"></i>
-                </a>
-            </td>
-            <td>
-                <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
-                    <i class="bi bi-pencil-square" style="color: blue;"></i>
-                </a>
-            </td>
-            <td>
-                <a onclick="remove(${id})" data-toggle="tooltip" title="Remover" data-placement="top" style="cursor: pointer;">
-                    <i class="bi bi-trash" style="color: red;"></i>
-                </a>
-            </td>
-        </tr>`;
-    });
+    }
 }
 
 function parcels(id) {
@@ -224,7 +230,7 @@ function parcels(id) {
                 tableRef.innerHTML += 
                 `<tr>
                     <td>${element.id}</td>
-                    <td>${moment(element.due_date).format('YYYY-MM-DD')}</td>
+                    <td>${moment(element.due_date).format('DD-MM-YYYY')}</td>
                     <td>${element.amount}</td>
                 </tr>`;
             });
@@ -247,9 +253,6 @@ function remove(id) {
             alert(response.data.error);
         } else {
             getAll();
-            setTimeout(() => {
-                alert(response.data);
-            }, 100); 
         }
     })
     .catch(function (error) {
@@ -279,7 +282,6 @@ document.getElementById("nova_despesa").addEventListener("click", function (even
     $('#despesa_valor').val("");
     $('#despesa_data').val("");
     $('#despesa_descricao').val("");
-    $('#despesa_parcela').val("");
     $('#despesa_status').val("");
 
     fillSelects();
@@ -289,8 +291,9 @@ function fillSelects() {
     if (categorias) {
         document.getElementById("despesa_categoria").innerHTML = ""
         let option = document.createElement('option');
-        option.text = "Selecione";
+        option.text = "";
         option.selected = true;
+        option.disabled = true;
         document.getElementById("despesa_categoria").append(option);
 
         categorias.forEach(categoria => {
@@ -306,23 +309,41 @@ function fillSelects() {
         document.getElementById("despesa_categoria").append(option);
     }
 
-    if (cartoes) {
-        document.getElementById("despesa_cartao").innerHTML = "";
-        let option = document.createElement('option');
-        option.text = "Selecione";
-        option.selected = true;
-        document.getElementById("despesa_cartao").append(option);
+    document.getElementById("despesa_cartao").innerHTML = "";
+    let option = document.createElement('option');
+    option.text = "A VISTA";
+    option.selected = true;
+    option.value = 6;
+    document.getElementById("despesa_cartao").append(option);
 
+    if (cartoes) {
         cartoes.forEach(cartao => {
             option = document.createElement('option');
-            option.text = cartao.number;
+            option.text = `${fllag[cartao.flag]} - ${cartao.number}`;
             option.value = cartao.id;
             document.getElementById("despesa_cartao").append(option);
         })
-    } else {
-        let option = document.createElement('option');
-        option.text = "Nenhum cartão cadastrado";
-        option.selected = true;
-        document.getElementById("despesa_cartao").append(option);
     }
 }
+
+$(".org").click(function (event) {
+    event.preventDefault();
+    let option = $(this).attr("data-type");
+
+    axios.get(`http://localhost:3000/api/expenses/filter/${usuario.id}/${option}`, {
+        auth: {
+            username: usuario ? usuario.email : null,
+            password: usuario ? usuario.password : null
+        }
+    })
+    .then(function (response) {
+        if (response.data.error) {
+            alert(response.data.error);
+        } else {
+            tableBodyElements(response.data);
+        }
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+})

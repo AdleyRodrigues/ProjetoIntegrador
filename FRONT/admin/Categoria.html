@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"">
-    <link rel=" stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <title>Integrador - Categoria</title>
 </head>
 
@@ -15,13 +15,14 @@
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light mt-5">
-                        <span class="fs-4 text-center">GD Gerenciamento</span>
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <span class="fs-4 text-center">Integrador</span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="./index.html" class="nav-link link-dark">
-                                Meu Perfil
+                                Home
                             </a>
                         </li>
                         <li>
@@ -44,17 +45,21 @@
                                 Categoria
                             </a>
                         </li>
+                        <li>
+                            <a href="./fatura.html" class="nav-link link-dark">
+                                Fatura
+                            </a>
+                        </li>
                     </ul>
                     <hr>
                     <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                            id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="" alt="" width="32" height="32" class="rounded-circle me-2" id="profile_image">
                             <strong>Perfil</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <li><button id="open_modal_perfil" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modalPerfil">Atualizar Perfil</button></li>
+                            <li><button id="open_modal_perfil" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalPerfil">Atualizar Perfil</button></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -65,13 +70,11 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Categorias</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" id="nova_categoria">Nova
-                                Categoria</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="nova_categoria">Nova Categoria</button>
                         </div>
                     </div>
                 </div>
@@ -106,8 +109,7 @@
                             <input type="text" class="form-control rounded-4" id="categoria_nome">
                             <label for="categoria_nome">Nome</label>
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"
-                            id="cadastrar_categoria">Cadastrar</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" id="cadastrar_categoria">Cadastrar</button>
                     </form>
                 </div>
             </div>
@@ -133,22 +135,18 @@
                             <input type="file" class="form-control rounded-4" id="avatar_create">
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control rounded-4" id="email_create"
-                                placeholder="name@example.com">
+                            <input type="email" class="form-control rounded-4" id="email_create" placeholder="name@example.com">
                             <label for="email">Email</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control rounded-4" id="password_create"
-                                placeholder="Senha">
+                            <input type="password" class="form-control rounded-4" id="password_create" placeholder="Senha">
                             <label for="password">Senha</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control rounded-4" id="password_confirm"
-                                placeholder="Confirmar senha">
+                            <input type="password" class="form-control rounded-4" id="password_confirm" placeholder="Confirmar senha">
                             <label for="password_confirm">Confirmar senha</label>
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit"
-                            id="mudar_perfil">Cadastrar</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" id="mudar_perfil">Cadastrar</button>
                     </form>
                 </div>
             </div>
@@ -156,7 +154,7 @@
     </div>
 
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -164,5 +162,4 @@
     <script src="../assets/js/admin/profile.js"></script>
     <script src="../assets/js/admin/logout.js"></script>
 </body>
-
 </html>
