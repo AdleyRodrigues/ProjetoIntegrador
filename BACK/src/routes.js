@@ -22,6 +22,8 @@ router.delete('/accounts/:id', basicAuth, accountController.removeAccountById);
 
 // Despesas
 router.get('/expenses/:account_id', basicAuth, expenseController.getAll);
+router.get('/expenses/filter/:account_id/:option', basicAuth, expenseController.organize);
+router.get('/expenses/:account_id/:card_id/:date', basicAuth, expenseController.getExpenseByDate);
 router.get('/expenses/:account_id/:id', basicAuth, expenseController.getExpenseById);
 router.post('/expenses/create', basicAuth, expenseController.create);
 router.put('/expenses/edit', basicAuth, expenseController.changeExpenseById);
@@ -52,6 +54,7 @@ router.delete('/categories/:id', basicAuth, categoryController.removeCategoryByI
 
 // Parcelas
 router.get('/parcels/:expense_id', basicAuth, parcelController.getAll);
+router.get('/parcels/:expense_id/:date', basicAuth, parcelController.getParcelByDate);
 router.post('/parcels/create', basicAuth, parcelController.create);
 router.delete('/parcels/:expense_id', basicAuth, parcelController.removeParcels);
 

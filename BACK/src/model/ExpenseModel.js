@@ -40,10 +40,9 @@ module.exports = class Expense {
         }
     }
 
-    validateBalance() {
-        if (this.card_id) {
-            let card = cardRepository.getCardById(this.account_id, this.card_id);
-
+    async validateBalance() {
+        if (this.card_id > 0) {
+            let card = await cardRepository.getCardById(this.account_id, this.card_id);;
             if (this.amount > (card.limitt - card.current_value)) {
                 this.error = "Cartão com limite insuficiente";
                 return;

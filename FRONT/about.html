@@ -11,90 +11,99 @@
 
 <body>
     <main>
+        <div class=" container">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                <use xlink:href="#bootstrap" />
+            </svg>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="index.html" class="nav-link px-2 link-secondary">Início</a></li>
+            <li><a href="about.html" class="nav-link px-2 link-dark">Sobre</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            <button type="button" id="btnEntrar" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                data-bs-target="#modalLogin">Entrar</button>
+            <button type="button" id="btnCadastrar" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#modalCadastro">Cadastrar</button>
+        </div>
+    </header>
+    <section class="py-5 text-center">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Nosso Time</h1>
+                <p class="lead text-muted">
+                    Desenvolvemos para você a melhor plataforma de controle financeiro do mercado. Nosso
+                    time de especialistas estão prontos para atendê-los e oferecer o melhor suporte para
+                    alavancar sua vida financeira.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
         <div class="container">
-            <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-                <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                </a>
-
-                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="index.html" class="nav-link px-2 link-secondary">Início</a></li>
-                    <li><a href="about.html" class="nav-link px-2 link-dark">Sobre</a></li>
-                </ul>
-
-                <div class="col-md-3 text-end">
-                    <button type="button" id="btnEntrar" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#modalLogin">Entrar</button>
-                    <button type="button" id="btnCadastrar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastro">Cadastrar</button>
-                </div>
-            </header>
-            <section class="py-5 text-center">
-                <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Nosso Time</h1>
-                        <p class="lead text-muted">
-                            Desenvolvemos para você a melhor plataforma de controle financeiro do mercado. Nosso
-                            time de especialistas estão prontos para atendê-los e oferecer o melhor suporte para
-                            alavancar sua vida financeira.
-                        </p>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="" alt="Adley Rodrigues" srcset="" width="100%" height="225">
+                        <rect width="100%" height="100%" fill="#55595c" />
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: justify;">
+                                DESENVOLVEDOR FULL STACK DO PROJETO
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center"></div>
+                        </div>
                     </div>
                 </div>
-            </section>
-        
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="" alt="Adley Rodrigues" srcset="" width="100%" height="225">
-                                <rect width="100%" height="100%" fill="#55595c"/>
-                                <div class="card-body">
-                                    <p class="card-text" style="text-align: justify;">
-                                        CEO e Co-fundador da Integrador Enterprises. Tem como hobbie basquete de praia.
-                                        Programador há mais de 2 anos, é o atual detentor do recorde mundial de abas abertas no
-                                        google chrome.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center"></div>
-                                </div>
-                            </div>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="" alt="Joelson" srcset="" width="100%" height="225">
+                        <rect width="100%" height="100%" fill="#55595c" />
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: justify;">
+                                DESENVOLVEDOR FULL STACK DO PROJETO
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center"></div>
                         </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="" alt="Éricles" srcset="" width="100%" height="225">
-                                <rect width="100%" height="100%" fill="#55595c"/>
-                                <div class="card-body">
-                                    <p class="card-text" style="text-align: justify;">
-                                        Desenvolvedor full stack sênior da Integrator Enterprises. Profissional há mais de 1 ano,
-                                        atualmente gosta de estudar novas tecnologias front-end. Já testou, descobriu e solucionou
-                                        diversos bugs no framwork Vue.js. Humanitário por natureza, é o criador do sistema de controle
-                                        de hotéis que o hóspede não precisa pagar pela estadia.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center"></div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="" alt="Eduarda" srcset="" width="100%" height="225">
+                        <rect width="100%" height="100%" fill="#55595c" />
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: justify;">
+                                DESENVOLVEDORA FRONT END DO PROJETO
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center"></div>
                         </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="" alt="Desconhecido" srcset="" width="100%" height="225">
-                                <rect width="100%" height="100%" fill="#55595c"/>
-                                <div class="card-body">
-                                    <p class="card-text" style="text-align: justify;">
-                                        Um desconhecido qualquer. Criou o banco de dados inicial todo bugado. Foram preciso horas e horas
-                                        de análise de dados para reformular toda a estrutura.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center"></div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="" alt="Matheus" srcset="" width="100%" height="225">
+                        <rect width="100%" height="100%" fill="#55595c" />
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: justify;">
+                                DESENVOLVEDOR FULL STACK DO PROJETO
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </main>
 
     <script>
-        window.onload = function() {
+        window.onload = function () {
             if (window.sessionStorage.getItem('logged')) {
                 document.getElementById('btnEntrar').style.display = 'none';
                 document.getElementById('btnCadastrar').style.display = 'none';
@@ -104,5 +113,6 @@
             }
         };
     </script>
-</body>
+    </body>
+
 </html>

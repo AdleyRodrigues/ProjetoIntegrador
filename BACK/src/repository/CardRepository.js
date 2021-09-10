@@ -19,7 +19,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-
+                
                 accepted(result[0]);
             });
         });
@@ -27,29 +27,29 @@ module.exports = {
 
     create: (card) => {
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO cards (id, number, type, flag, limitt, closed_at, current_value, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            db.query('INSERT INTO cards (id, number, type, flag, limitt, closed_at, current_value, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
                 [card.id, card.number, card.type, card.flag, card.limitt, card.closed_at, card.current_value, card.account_id], (error, result) => {
-
-                    if (error) {
-                        rejected(error.sqlMessage);
-                    }
-
-                    accepted(true);
-                });
+            
+                if (error) {
+                    rejected(error.sqlMessage);
+                }
+                
+                accepted(true);
+            });
         });
     },
 
     changeCardById: (card) => {
         return new Promise((accepted, rejected) => {
-            db.query('UPDATE cards SET number = ?, type = ?, flag = ?, limitt = ?, closed_at = ?, current_value = ? WHERE id = ?',
+            db.query('UPDATE cards SET number = ?, type = ?, flag = ?, limitt = ?, closed_at = ?, current_value = ? WHERE id = ?', 
                 [card.number, card.type, card.flag, card.limitt, card.closed_at, card.current_value, card.id], (error, result) => {
+            
+                if (error) {
+                    rejected(error.sqlMessage);
+                }
 
-                    if (error) {
-                        rejected(error.sqlMessage);
-                    }
-
-                    accepted(true);
-                });
+                accepted(true);
+            });
         });
     },
 
@@ -57,10 +57,10 @@ module.exports = {
         return new Promise((accepted, rejected) => {
             db.query('DELETE FROM cards WHERE id = ?', [id], (error, result) => {
                 if (error) {
-                    rejected(error.sqlMessage);
+                    rejected(error);
                 }
-
-                accepted(true);
+                
+                accepted(result);
             });
         });
     },

@@ -13,18 +13,32 @@ module.exports = {
         });
     },
 
-    create: (parcel) => {
+    getParcelByDate: (expense_id, date) => {
+        var d = new Date(date);
 
         return new Promise((accepted, rejected) => {
-            db.query('INSERT INTO parcels (id, due_date, amount, expense_id) VALUES (?, ?, ?, ?)',
+            db.query('SELECT * FROM parcels WHERE expense_id = ? and due_date between ? and ?', 
+                [expense_id, new Date(d.setDate(d.getDate() - 30)), date], (error, results) => {
+                if (error) {
+                    rejected(error.sqlMessage);
+                }
+
+                accepted(results[0]);
+            });
+        });
+    },
+
+    create: (parcel) => {
+        return new Promise((accepted, rejected) => {
+            db.query('INSERT INTO parcels (id, due_date, amount, expense_id) VALUES (?, ?, ?, ?)', 
                 [parcel.id, parcel.due_date, parcel.amount, parcel.expense_id], (error, result) => {
-
-                    if (error) {
-                        rejected(error.sqlMessage);
-                    }
-
-                    accepted(true);
-                });
+            
+                if (error) {
+                    rejected(error.sqlMessage);
+                }
+                
+                accepted(true);
+            });
         });
     },
 
@@ -34,7 +48,7 @@ module.exports = {
                 if (error) {
                     rejected(error.sqlMessage);
                 }
-
+                
                 accepted(true);
             });
         });
