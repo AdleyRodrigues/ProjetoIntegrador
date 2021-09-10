@@ -5,23 +5,31 @@ const cardRepository = require('../repository/CardRepository');
 const Parcel = require('../model/ParcelModel');
 
 module.exports = {
-    getAll: async(req, res) => {
-        await expenseRepository.getAll(req.params.account_id).then(results => res.json(results)).catch(error => res.json(error));
+    getAll: async (req, res) => {
+        await expenseRepository.getAll(req.params.account_id)
+            .then(results => res.json(results))
+            .catch(error => res.json(error));
     },
 
-    organize: async(req, res) => {
-        await expenseRepository.organize(req.params.account_id, req.params.option).then(results => res.json(results)).catch(error => res.json(error));
+    organize: async (req, res) => {
+        await expenseRepository.organize(req.params.account_id, req.params.option)
+            .then(results => res.json(results))
+            .catch(error => res.json(error));
     },
 
-    getExpenseById: async(req, res) => {
-        await expenseRepository.getExpenseById(req.params.account_id, req.params.id).then(result => res.json(result)).catch(error => res.json(error));
+    getExpenseById: async (req, res) => {
+        await expenseRepository.getExpenseById(req.params.account_id, req.params.id)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
     getExpenseByDate: async (req, res) => {
-        await expenseRepository.getExpenseByDate(req.params.account_id, req.params.card_id, req.params.date).then(result => res.json(result)).catch(error => res.json(error));
+        await expenseRepository.getExpenseByDate(req.params.account_id, req.params.card_id, req.params.date)
+            .then(result => res.json(result))
+            .catch(error => res.json(error));
     },
 
-    create: async(req, res) => {
+    create: async (req, res) => {
         let card_id = (req.body.card_id != '' ? req.body.card_id : null);
         let expense = new Expense(await expenseRepository.getMaxId() + 1, req.body.amount, req.body.date, req.body.description, req.body.parcel, req.body.status, req.body.category_id, card_id, req.account.id);
 
@@ -46,7 +54,7 @@ module.exports = {
             for (let index = 0; index < expense.parcel; index++) {
                 data = new Date(data.setDate(data.getDate() + 30));
                 let parcel = new Parcel(await parcelRepository.getMaxId() + 1, data.setDate(data.getDate()) + 30, parcelValue, expense.id);
-                
+
                 await parcelRepository.create(parcel).catch(error => expense.error = error);
             }
         }
@@ -67,7 +75,7 @@ module.exports = {
         res.json(expense);
     },
 
-    changeExpenseById: async(req, res) => {
+    changeExpenseById: async (req, res) => {
         let card_id = (req.body.card_id != '' ? req.body.card_id : null);
         let expense = new Expense(req.body.id, req.body.amount, req.body.date, req.body.description, req.body.parcel, req.body.status, req.body.category_id, card_id, req.account.id);
 
@@ -92,7 +100,7 @@ module.exports = {
             for (let index = 0; index < expense.parcel; index++) {
                 data = new Date(data.setDate(data.getDate() + 30));
                 let parcel = new Parcel(await parcelRepository.getMaxId() + 1, data.setDate(data.getDate()) + 30, parcelValue, expense.id);
-                
+
                 await parcelRepository.create(parcel).catch(error => expense.error = error);
             }
         }
@@ -107,7 +115,7 @@ module.exports = {
         res.json(expense);
     },
 
-    removeExpenseById: async(req, res) => {
+    removeExpenseById: async (req, res) => {
         let oldExpense = await expenseRepository.getExpenseById(null, req.params.id);
 
         await expenseRepository.removeExpenseById(req.params.id).catch(error => { return res.json(error) });
