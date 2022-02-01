@@ -15,7 +15,7 @@ module.exports = class Card {
             this.error = 'Informe um número';
             return;
         } else {
-            if (this.number.length > 16 || this.number.length < 16) {
+            if (this.number.length != 16) {
                 this.error = "Cartão com número inválido";
                 return;
             }
