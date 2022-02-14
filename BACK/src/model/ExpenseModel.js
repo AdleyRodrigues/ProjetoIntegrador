@@ -17,6 +17,11 @@ module.exports = class Expense {
         if (!this.amount) {
             this.error = 'Informe um valor';
             return;
+        }else{
+            if(this.amount < 0){
+                this.error = 'Informe um valor maior que zero';
+                return;
+            }
         }
 
         if (!this.date) {
