@@ -15,6 +15,11 @@ module.exports = class Incoming {
         if (!this.income) {
             this.error = 'Informe um valor';
             return;
+        }else {
+            if(this.income < 0){
+                this.error = 'Informe um valor maior que zero';
+                return;
+            }
         }
 
         if (!this.account_id) {

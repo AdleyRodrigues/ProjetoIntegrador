@@ -39,6 +39,11 @@ module.exports = class Card {
         if (!this.limitt) {
             this.error = 'Informe um limite';
             return;
+        }else{
+            if(this.limitt < 0){
+                this.error = 'Informe um valor maior que zero';
+                return;
+            }
         }
 
         if (!this.account_id) {
