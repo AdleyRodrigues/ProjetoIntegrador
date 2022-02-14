@@ -6,7 +6,7 @@ window.onload = () => {
 
 document.getElementById("cadastrar_cartao").addEventListener("click", function (event) {
     event.preventDefault();
-    
+
     if (document.getElementById("cartao_id").value == "") {
         axios.post("http://localhost:3000/api/cards/create", {
             number: document.getElementById("card_number").value,
@@ -22,17 +22,17 @@ document.getElementById("cadastrar_cartao").addEventListener("click", function (
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalCartao').modal('hide');
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalCartao').modal('hide');
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     } else {
         axios.put("http://localhost:3000/api/cards/edit", {
             id: document.getElementById("cartao_id").value,
@@ -49,20 +49,20 @@ document.getElementById("cadastrar_cartao").addEventListener("click", function (
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalCartao').modal('hide');
-                setTimeout(() => {
-                    alert("Cartão atualizado.");
-                }, 200);
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalCartao').modal('hide');
+                    setTimeout(() => {
+                        alert("Cartão atualizado.");
+                    }, 200);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 });
 
@@ -71,18 +71,18 @@ function getAll() {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            tableBodyElements(response.data);
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                tableBodyElements(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function getById(id) {
@@ -90,18 +90,18 @@ function getById(id) {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            return response.data;
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                return response.data;
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function tableBodyElements(elements) {
@@ -116,7 +116,7 @@ function tableBodyElements(elements) {
             let closed_at = element.closed_at;
             let type = element.type == 1 ? "Débito" : "Crédito";
             let current_value = element.current_value;
-            
+
             let flag = {
                 1: "VISA",
                 2: "CREDICARD",
@@ -124,9 +124,9 @@ function tableBodyElements(elements) {
                 4: "MASTERCARD",
                 5: "FITBANK",
             };
-            
-            tableRef.innerHTML += 
-            `<tr>
+
+            tableRef.innerHTML +=
+                `<tr>
                 <td>${id}</td>
                 <td>${number}</td>
                 <td>${type}</td>
@@ -149,23 +149,23 @@ function tableBodyElements(elements) {
     }
 }
 
-function remove(id) {    
+function remove(id) {
     axios.delete(`http://localhost:3000/api/cards/${id}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function edit(id) {

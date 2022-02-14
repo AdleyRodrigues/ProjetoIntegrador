@@ -6,7 +6,7 @@ window.onload = () => {
 
 document.getElementById("cadastrar_receita").addEventListener("click", function (event) {
     event.preventDefault();
-    
+
     if (document.getElementById("receita_id").value == "") {
         axios.post("http://localhost:3000/api/incomings/create", {
             date: document.getElementById("receita_date").value,
@@ -18,17 +18,17 @@ document.getElementById("cadastrar_receita").addEventListener("click", function 
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalReceita').modal('hide');
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalReceita').modal('hide');
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     } else {
         axios.put("http://localhost:3000/api/incomings/edit", {
             id: document.getElementById("receita_id").value,
@@ -41,20 +41,20 @@ document.getElementById("cadastrar_receita").addEventListener("click", function 
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalReceita').modal('hide');
-                setTimeout(() => {
-                    alert("Receita atualizada.");
-                }, 200);
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalReceita').modal('hide');
+                    setTimeout(() => {
+                        alert("Receita atualizada.");
+                    }, 200);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 });
 
@@ -65,7 +65,7 @@ document.getElementById("filtrar_receita").addEventListener("click", function (e
         alert("Nenhuma data selecionada");
         return;
     }
-    
+
     axios.post("http://localhost:3000/api/incomings/filter", {
         date_from: document.getElementById("data_de").value,
         date_to: document.getElementById("data_ate").value,
@@ -75,16 +75,16 @@ document.getElementById("filtrar_receita").addEventListener("click", function (e
             password: usuario ? usuario.password : null
         }
     })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            tableBodyElements(response.data);
-        }
-    })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                tableBodyElements(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 });
 
 function getAll() {
@@ -92,18 +92,18 @@ function getAll() {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            tableBodyElements(response.data);
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                tableBodyElements(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function getById(id) {
@@ -111,18 +111,18 @@ function getById(id) {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            return response.data;
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                return response.data;
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function tableBodyElements(elements) {
@@ -134,9 +134,9 @@ function tableBodyElements(elements) {
             let id = element.id;
             let date = moment(element.date).format('DD/MM/YYYY');
             let amount = element.income;
-            
-            tableRef.innerHTML += 
-            `<tr>
+
+            tableRef.innerHTML +=
+                `<tr>
                 <td>${id}</td><td>${date}</td><td>${amount}</td>
                 <td>
                     <a onclick="edit(${id})" data-toggle="tooltip" title="Editar" data-placement="top" style="cursor: pointer;">
@@ -153,23 +153,23 @@ function tableBodyElements(elements) {
     }
 }
 
-function remove(id) {    
+function remove(id) {
     axios.delete(`http://localhost:3000/api/incomings/${id}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function edit(id) {

@@ -6,19 +6,19 @@ window.onload = () => {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            cartoes = response.data;
-            fillSelects();
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                cartoes = response.data;
+                fillSelects();
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function fillSelects() {
@@ -56,31 +56,31 @@ function fillSelects() {
 
 document.getElementById("card_select").addEventListener("change", () => {
     var cardNumber = document.getElementById("card_select").value;
-    
+
     axios.get(`http://localhost:3000/api/cards/${usuario.id}/${cardNumber}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            cartao = response.data;
-            displayInvoice(response.data);
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                cartao = response.data;
+                displayInvoice(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 })
 
 function displayInvoice(card, dateCombo = null) {
     if (card) {
         let month = new Date().getMonth() + 1;
-        let date  = `${new Date().getFullYear()}-${month}-${card.closed_at}`;
-        
+        let date = `${new Date().getFullYear()}-${month}-${card.closed_at}`;
+
         let type = {
             1: "Débito",
             2: "Crédito",
@@ -100,18 +100,18 @@ function displayInvoice(card, dateCombo = null) {
             auth: {
                 username: usuario ? usuario.email : null,
                 password: usuario ? usuario.password : null
-            }    
-        })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getCategory(response.data, card);
             }
         })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getCategory(response.data, card);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 }
 
@@ -122,19 +122,19 @@ function getCategory(elements, card) {
                 auth: {
                     username: usuario ? usuario.email : null,
                     password: usuario ? usuario.password : null
-                }    
-            })
-            .then(function (response) {
-                if (response.data.error) {
-                    alert(response.data.error);
-                } else {
-                    console.log(response.data.name);
-                    element.category_name = response.data.name;
                 }
             })
-            .catch(function (error) {
-                alert(error);
-            });
+                .then(function (response) {
+                    if (response.data.error) {
+                        alert(response.data.error);
+                    } else {
+                        console.log(response.data.name);
+                        element.category_name = response.data.name;
+                    }
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
         })
 
         getDataParcela(elements, card);
@@ -151,22 +151,22 @@ function getDataParcela(elements, card) {
                 auth: {
                     username: usuario ? usuario.email : null,
                     password: usuario ? usuario.password : null
-                }    
-            })
-            .then(function (response) {
-                if (response.data.error) {
-                    alert(response.data.error);
-                } else {
-                    if (response.data) {
-                        element.data = response.data;
-                        total += response.data.amount;
-                        mountTable(element, total);
-                    }
                 }
             })
-            .catch(function (error) {
-                alert(error);
-            });
+                .then(function (response) {
+                    if (response.data.error) {
+                        alert(response.data.error);
+                    } else {
+                        if (response.data) {
+                            element.data = response.data;
+                            total += response.data.amount;
+                            mountTable(element, total);
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
         });
     }
 }
@@ -176,8 +176,8 @@ function mountTable(element, total) {
     let date = moment(element.date).format('DD/MM/YYYY');
     let status = element.status == 0 ? "Não Pago" : "Pago";
 
-    tableRef.innerHTML += 
-    `<tr>
+    tableRef.innerHTML +=
+        `<tr>
         <td>${element.id}</td>
         <td>${date}</td>
         <td>${element.description}</td>

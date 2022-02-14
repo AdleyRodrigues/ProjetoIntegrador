@@ -6,7 +6,7 @@ window.onload = () => {
 
 document.getElementById("cadastrar_categoria").addEventListener("click", function (event) {
     event.preventDefault();
-    
+
     if (document.getElementById("categoria_id").value == "") {
         axios.post("http://localhost:3000/api/categories/create", {
             name: document.getElementById("categoria_nome").value,
@@ -17,17 +17,17 @@ document.getElementById("cadastrar_categoria").addEventListener("click", functio
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalCategoria').modal('hide');
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalCategoria').modal('hide');
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     } else {
         axios.put("http://localhost:3000/api/categories/edit", {
             id: document.getElementById("categoria_id").value,
@@ -39,20 +39,20 @@ document.getElementById("cadastrar_categoria").addEventListener("click", functio
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalCategoria').modal('hide');
-                setTimeout(() => {
-                    alert("Categoria atualizada.");
-                }, 200);
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalCategoria').modal('hide');
+                    setTimeout(() => {
+                        alert("Categoria atualizada.");
+                    }, 200);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 });
 
@@ -61,21 +61,21 @@ function getAll() {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            console.log(response.data);
-            if (response.data.length > 0) {
-                tableBodyElements(response.data);
-            }
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                console.log(response.data);
+                if (response.data.length > 0) {
+                    tableBodyElements(response.data);
+                }
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function getById(id) {
@@ -83,18 +83,18 @@ function getById(id) {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            return response.data;
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                return response.data;
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function tableBodyElements(elements) {
@@ -105,9 +105,9 @@ function tableBodyElements(elements) {
         elements.forEach(element => {
             let id = element.id;
             let name = element.name;
-            
-            tableRef.innerHTML += 
-            `<tr>
+
+            tableRef.innerHTML +=
+                `<tr>
                 <td>${id}</td>
                 <td>${name}</td>
                 <td>
@@ -125,26 +125,26 @@ function tableBodyElements(elements) {
     }
 }
 
-function remove(id) {    
+function remove(id) {
     axios.delete(`http://localhost:3000/api/categories/${id}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
-            setTimeout(() => {
-                alert(response.data);
-            }, 100); 
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+                setTimeout(() => {
+                    alert(response.data);
+                }, 100);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function edit(id) {

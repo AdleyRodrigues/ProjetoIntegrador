@@ -14,39 +14,39 @@ window.onload = () => {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            if (response.data.length > 0) {
-                categorias = response.data;
-            }
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                if (response.data.length > 0) {
+                    categorias = response.data;
+                }
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 
     axios.get(`http://localhost:3000/api/cards/${usuario.id}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            if (response.data.length > 0) {
-                cartoes = response.data;
-            } 
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                if (response.data.length > 0) {
+                    cartoes = response.data;
+                }
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 
     getAll();
 }
@@ -70,17 +70,17 @@ document.getElementById("cadastrar_despesa").addEventListener("click", function 
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalDespesa').modal('hide');
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalDespesa').modal('hide');
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     } else {
         axios.put("http://localhost:3000/api/expenses/edit", {
             id: document.getElementById("despesa_id").value,
@@ -98,20 +98,20 @@ document.getElementById("cadastrar_despesa").addEventListener("click", function 
                 password: usuario ? usuario.password : null
             }
         })
-        .then(function (response) {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                getAll();
-                $('#modalDespesa').modal('hide');
-                setTimeout(() => {
-                    alert("Despesa atualizada.");
-                }, 200);
-            }
-        })
-        .catch(function (error) {
-            alert(error);
-        });
+            .then(function (response) {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    getAll();
+                    $('#modalDespesa').modal('hide');
+                    setTimeout(() => {
+                        alert("Despesa atualizada.");
+                    }, 200);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 });
 
@@ -120,18 +120,18 @@ function getAll() {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            tableBodyElements(response.data);
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                tableBodyElements(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function getById(id) {
@@ -139,18 +139,18 @@ function getById(id) {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            return response.data;
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                return response.data;
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function tableBodyElements(elements) {
@@ -168,11 +168,11 @@ function tableBodyElements(elements) {
             let category_id = categorias.find(cat => {
                 if (cat.id == element.category_id) {
                     return cat.name;
-                } 
+                }
             });
 
             let card;
-            
+
             if (cartoes) {
                 card = element.card_id ? cartoes.find(cartao => {
                     if (cartao.id == element.card_id) {
@@ -181,8 +181,8 @@ function tableBodyElements(elements) {
                 }) : null;
             }
 
-            tableRef.innerHTML += 
-            `<tr>
+            tableRef.innerHTML +=
+                `<tr>
                 <td>${id}</td>
                 <td>${amount}</td>
                 <td>${date}</td>
@@ -216,48 +216,48 @@ function parcels(id) {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }    
+        }
     })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            $('#modalParcelas').modal('show');
-            let tableRef = document.getElementById("lista_parcelas");
-            tableRef.innerHTML = "";
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                $('#modalParcelas').modal('show');
+                let tableRef = document.getElementById("lista_parcelas");
+                tableRef.innerHTML = "";
 
-            response.data.forEach(element => {
-                tableRef.innerHTML += 
-                `<tr>
+                response.data.forEach(element => {
+                    tableRef.innerHTML +=
+                        `<tr>
                     <td>${element.id}</td>
                     <td>${moment(element.due_date).format('DD-MM-YYYY')}</td>
                     <td>${element.amount}</td>
                 </tr>`;
-            });
-        }
-    })
-    .catch(function (error) {
-        alert(error);
-    });
+                });
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
-function remove(id) {   
+function remove(id) {
     axios.delete(`http://localhost:3000/api/expenses/${id}`, {
         auth: {
             username: usuario ? usuario.email : null,
             password: usuario ? usuario.password : null
-        }   
-    })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            getAll();
         }
     })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                getAll();
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 }
 
 function edit(id) {
@@ -336,14 +336,14 @@ $(".org").click(function (event) {
             password: usuario ? usuario.password : null
         }
     })
-    .then(function (response) {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            tableBodyElements(response.data);
-        }
-    })
-    .catch(function (error) {
-        alert(error);
-    });
+        .then(function (response) {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                tableBodyElements(response.data);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 })

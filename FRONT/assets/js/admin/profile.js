@@ -20,7 +20,7 @@ document.getElementById("mudar_perfil").addEventListener("click", function (even
     formData.append('avatar', document.getElementById("avatar_create").files[0]);
     formData.append('email', document.getElementById("email_create").value);
     formData.append('password', document.getElementById("password_create").value);
-    
+
     axios.put("http://localhost:3000/api/accounts/edit", formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         auth: {
@@ -28,18 +28,18 @@ document.getElementById("mudar_perfil").addEventListener("click", function (even
             password: usuario.password
         }
     })
-    .then((response) => {
-        if (response.data.error) {
-            alert(response.data.error);
-        } else {
-            window.sessionStorage.setItem('usuario', JSON.stringify(response.data));
-            alert('Usuário atualizado com sucesso.');
-            window.location.href = "index.html";
-        }
-    })
-    .catch((error) => {
-        alert(error);
-    });
+        .then((response) => {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                window.sessionStorage.setItem('usuario', JSON.stringify(response.data));
+                alert('Usuário atualizado com sucesso.');
+                window.location.href = "index.html";
+            }
+        })
+        .catch((error) => {
+            alert(error);
+        });
 });
 
 document.getElementById("open_modal_perfil").addEventListener("click", function (event) {
